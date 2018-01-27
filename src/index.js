@@ -7,18 +7,8 @@ import { BrowserRouter as Router, Route} from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import Account from './components/Account';
+import { AuthRoute } from './components/Authroute'
 import { Redirect } from 'react-router';
-import { checkAuth } from './services/AuthService';
-
-const AuthRoute = ({ component: Component, ...rest }) => {
-    return <Route { ...rest } render = { props => (
-        checkAuth() ? (
-            <Component { ...props } />
-        ) : (
-            <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-        )
-    )} />
-}
 
 ReactDOM.render(
     <Router>

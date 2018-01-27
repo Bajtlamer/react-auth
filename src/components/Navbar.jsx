@@ -11,6 +11,17 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
+  import { checkAuth } from '../services/AuthService';
+
+const Logination = props => {
+  const { isLogged } = props;
+  // let isAuthenticated = checkAuth();
+  if(isLogged){
+    return <NavLink href="/logout/">Logout</NavLink>
+  }else{
+    return <NavLink href="/login/">Login</NavLink>
+  }
+}
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -18,15 +29,18 @@ export default class Navigation extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
   render() {
+    const isLogged = checkAuth();
     return (
       <div>
         <Navbar color="faded" light expand="md">
@@ -38,7 +52,8 @@ export default class Navigation extends React.Component {
                 <NavLink href="/account/">Account</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/login/">Login</NavLink>
+                <Logination isLogged={isLogged}/>
+                {/* <NavLink href="/login/">Login</NavLink> */}
               </NavItem>
               <UncontrolledDropdown nav >
                 <DropdownToggle nav caret>
