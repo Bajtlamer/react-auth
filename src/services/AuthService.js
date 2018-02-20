@@ -7,9 +7,9 @@ export const checkAuth=()=>{
         var payload = {};
         let exp = null;
         token = localStorage.getItem('token');
-        console.log(token);
+        // console.log(token);
         
-        if(token){
+        if(token !== null && token !== 'null'){
             payload = jwt_decode(token);
             if(payload.exp){
                 exp = payload.exp;
@@ -19,8 +19,8 @@ export const checkAuth=()=>{
 
             const dateTime = Date.now();
             const timestamp = Math.floor(dateTime / 1000);
-            console.log('Payload:',payload.exp);
-            console.log('Date:',timestamp);
+            // console.log('Payload:',payload.exp);
+            // console.log('Date:',timestamp);
             
             if(exp > timestamp){
                 return true;

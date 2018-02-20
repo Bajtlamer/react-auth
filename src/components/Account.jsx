@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { 
-	Card, CardHeader, CardFooter, CardBody,	CardTitle, Container, FormGroup, Row, CardText 
+import {
+	Card, CardHeader, CardBody, Container, Row, CardText
 } from "reactstrap";
 import Navigation from './Navbar';
 

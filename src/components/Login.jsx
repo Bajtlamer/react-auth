@@ -4,8 +4,17 @@ import {
 } from 'react-router-dom'
 
 import {
-	Card, Button, CardHeader, CardFooter, CardBody,
-	CardTitle, CardText, Form, FormText, Container, FormGroup, Input, Label, Row, Alert
+	Card, 
+	Button, 
+	CardHeader, 
+	CardBody,
+	Form, 
+	Container, 
+	FormGroup, 
+	Input, 
+	Label, 
+	Row, 
+	Alert
 } from "reactstrap";
 import "./Login.css";
 import Navigation from './Navbar';
@@ -39,23 +48,17 @@ class Login extends Component {
 
 		this.setState({ submitted: true });
 		const { username, password } = this.state;
-		const { dispatch } = this.props;
 		if (username && password) {
-			console.log('prihlasuji');
+			// console.log('prihlasuji');
 			this.login(username, password);
-			// console.log(x);
 		} else {
 			// alert('Neco se posralo');
 		}
 	}
 
 	login = (username, password) => {
-		// localStorage.setItem('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYWp0QHZvbG55LmN6IiwiaWF0IjoxNTE3MDAxNzM3LCJleHAiOjE1MTcwMDUzMzd9.ju-9zlgg1eJfJ46ZHUaGoitOW6RFgNSIQOwLwZ2ooxQ');
 		this.setState({ logging: true });
-		// console.log('login');
-		// var logged = false;
 
-		// this.setState({ redirectToReferrer: true })
 		axios.post('http://localhost:3001/api/login', {
 			email: username,
 			password: password
@@ -72,15 +75,11 @@ class Login extends Component {
 			}
 		}).catch(err =>{
 			this.isAuthenticated = false;
-			// this.setState({ redirectToReferrer: false });
 			this.setState({ 
 				error: 'Username or password are wrong', 
 				logging: false
 			});
 		})
-		// console.log(this.isAuthenticated);
-			// this.setState({ redirectToReferrer: this.isAuthenticated })
-
 	}
 
 
@@ -121,7 +120,7 @@ class Login extends Component {
 										<Button color="primary" className="btnMineWidth" onClick={() => this.handleSubmit(this)}>Login</Button>
 										
 										{this.state.logging &&
-											<img className="loginLoader" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+											<img alt="Loader..." className="loginLoader" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
 										}
 									</Form>
 								</CardBody>

@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { checkAuth } from '../services/AuthService';
 
 export const AuthRoute = ({ component: Component, ...rest }) => {
-    return <Route { ...rest } render = { props => (
+    return <Route {...rest} render={props => (
         checkAuth() ? (
-            <Component { ...props } />
+            <Component {...props} />
         ) : (
-            <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-        )
+                <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+            )
     )} />
 }
