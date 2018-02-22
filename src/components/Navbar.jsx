@@ -46,6 +46,11 @@ export default class Navigation extends React.Component {
         <Navbar color="faded" light expand="md">
           <NavbarBrand href="/">Home</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
+          <Nav className="ml-left" navbar>
+              <NavItem>
+                <NavLink href="/sections/">Sekce</NavLink>
+              </NavItem>
+          </Nav>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>

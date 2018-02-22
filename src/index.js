@@ -9,6 +9,7 @@ import Register from './components/Register';
 import NotFound from './components/not-found';
 import Logout from './components/Logout';
 import Account from './components/Account';
+import Sections from './components/SectionList';
 import { AuthRoute } from './components/Authroute'
 import { Switch } from 'react-router';
 
@@ -17,6 +18,7 @@ ReactDOM.render(
         <Switch>
             <AuthRoute exact path="/" component={App} />
             <AuthRoute exact path="/account" component={Account} />
+            <AuthRoute exact path="/sections" component={Sections} />
             <Route exact path="/login" render = {props => <Login {...props} />} />
             <Route exact path="/logout" render = {props => <Logout {...props} />} />
             <Route exact path="/register"  render = {props => <Register {...props} />}/>

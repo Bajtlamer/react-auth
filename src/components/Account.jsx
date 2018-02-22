@@ -8,8 +8,8 @@ class Account extends Component {
 	render() {
 		return (
 			<div>
-				<Navigation />
 				<Container>
+				<Navigation />
 					<Row>
 						<div className="col-4 offset-4">
 							<Card>
