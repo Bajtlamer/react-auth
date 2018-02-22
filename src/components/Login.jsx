@@ -23,6 +23,11 @@ import axios from 'axios';
 class Login extends Component {
 	constructor(props) {
 		super(props);
+		this.url = 'http://localhost:3001/api/login';
+
+		this.errors = [
+			404 : "Not Found"
+		];
 
 		this.state = {
 			username: '',
@@ -59,7 +64,8 @@ class Login extends Component {
 	login = (username, password) => {
 		this.setState({ logging: true });
 
-		axios.post('http://localhost:3001/api/login', {
+		// const that = this;
+		axios.post(this.url, {
 			email: username,
 			password: password
 		},{
@@ -67,21 +73,46 @@ class Login extends Component {
 			'content-type': 'application/x-www-form-urlencoded'
 		}).then(response => {
 			if(typeof response.data.token !== 'undefined'){
-				console.log(response);
+				// console.log(response);
 				localStorage.setItem('token',response.data.token);
 				this.isAuthenticated = true;
 				this.setState({ redirectToReferrer: true });
-				console.log(this.isAuthenticated);
+				// console.log(this.isAuthenticated);
 			}
-		}).catch(err =>{
+		}).catch(err => {
 			this.isAuthenticated = false;
 			this.setState({ 
-				error: 'Username or password are wrong', 
+				error: this.handleErrors(err), 
 				logging: false
 			});
 		})
 	}
 
+
+	handleErrors(err){
+		let code = 0
+		let message = 'Undefined ';
+
+		if(typeof err.response === 'undefined'){
+			code = -1;
+		}else{
+			code = err.response.status;
+		}
+
+		switch (code) {
+			case 404:
+				message = '404 Not Found.'
+				break;
+			case 401:
+				message = 'Login failed.'
+				break;
+			default:
+				message += err.message;
+				break;
+		}
+
+		return message;
+	}
 
 	render() {
 		const { from } = this.props.location.state || { from: { pathname: '/' } }
