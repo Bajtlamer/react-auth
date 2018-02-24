@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+// Import default Bootstrap 4 CSS
+import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
@@ -19,6 +21,7 @@ ReactDOM.render(
             <AuthRoute exact path="/" component={App} />
             <AuthRoute exact path="/account" component={Account} />
             <AuthRoute exact path="/sections" component={Sections} />
+            <AuthRoute exact path="/sections/:id" component={Sections} />
             <Route exact path="/login" render = {props => <Login {...props} />} />
             <Route exact path="/logout" render = {props => <Logout {...props} />} />
             <Route exact path="/register"  render = {props => <Register {...props} />}/>

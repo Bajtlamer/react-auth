@@ -26,7 +26,7 @@ class Login extends Component {
 		this.url = 'http://localhost:3001/api/login';
 
 		this.errors = [
-			404 : "Not Found"
+			{404 : "Not Found"}
 		];
 
 		this.state = {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Table } from 'reactstrap';
+// import 'bootstrap/dist/css/bootstrap.css';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import Navigation from './Navbar';
 import axios from 'axios';
@@ -58,9 +60,25 @@ class Sections extends Component {
 
 
 	render() {
+		const { id } = this.props.match.params;
+		console.log(id);
 		return (
 			<Container>
 			<Navigation />
+				<div>
+                <Button color="danger" onClick={this.toggle}> Open Modal </Button>
+                
+                <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                    <ModalBody>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+            </div>
 			<h1>Sections</h1>
 			<Table>
 		        <thead>
