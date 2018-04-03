@@ -40,7 +40,8 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    const isLogged = checkAuth();
+    const { isLogged } = this.props;
+
     return (
       <div>
         <Navbar color="faded" light expand="md">

@@ -5,10 +5,12 @@ import {
 import Navigation from './Navbar';
 
 class Account extends Component {
+
 	render() {
+		const { isLogged } = this.props;
 		return (
 			<div>
-				<Navigation />
+				<Navigation isLogged={isLogged}/>
 				<Container>
 					<Row>
 						<div className="col-4 offset-4">

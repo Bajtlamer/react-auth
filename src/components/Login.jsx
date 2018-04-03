@@ -19,6 +19,7 @@ import {
 import "./Login.css";
 import Navigation from './Navbar';
 import axios from 'axios';
+import { auth } from '../firebase';
 
 class Login extends Component {
 	constructor(props) {
@@ -54,39 +55,39 @@ class Login extends Component {
 		this.setState({ submitted: true });
 		const { username, password } = this.state;
 		if (username && password) {
-			// console.log('prihlasuji');
+			
 			this.login(username, password);
 		} else {
-			// alert('Neco se posralo');
+			alert('Neco se posralo');
 		}
 	}
 
 	login = (username, password) => {
 		this.setState({ logging: true });
-
-		// const that = this;
-		axios.post(this.url, {
-			email: username,
-			password: password
-		},{
-			'Content-Type': 'application/json',
-			'content-type': 'application/x-www-form-urlencoded'
-		}).then(response => {
-			if(typeof response.data.token !== 'undefined'){
-				// console.log(response);
-				localStorage.setItem('token',response.data.token);
-				this.isAuthenticated = true;
-				this.setState({ redirectToReferrer: true });
-				// console.log(this.isAuthenticated);
-			}
-		}).catch(err => {
-			this.isAuthenticated = false;
-			this.setState({ 
-				error: this.handleErrors(err), 
+		
+		console.log('prihlasuji');
+		
+		auth.doSignInWithEmailAndPassword(username, password)
+      	.then((user) => {
+      		console.log(user);
+	        
+	        localStorage.setItem('user', JSON.stringify(user));
+	        this.setState({
+	        	redirectToReferrer: true, 
+	        	user: user,
+	        	logging: false 
+	        });
+	        // history.push(routes.HOME);
+      	})
+      	.catch(error => {
+      		// console.log(error);
+      		this.setState({ 
+      			user: null,
+				error: error.message, 
 				logging: false
-			});
+	      	});
 		})
-	}
+      }
 
 
 	handleErrors(err){
@@ -116,9 +117,10 @@ class Login extends Component {
 
 	render() {
 		const { from } = this.props.location.state || { from: { pathname: '/' } }
-    const { redirectToReferrer } = this.state
+    	const { redirectToReferrer } = this.state
     
     if (redirectToReferrer) {
+
       return (
         <Redirect to={from}/>
       )
