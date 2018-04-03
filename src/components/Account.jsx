@@ -8,6 +8,8 @@ class Account extends Component {
 
 	render() {
 		const { isLogged } = this.props;
+		const user = JSON.parse(localStorage.getItem('user'));
+
 		return (
 			<div>
 				<Navigation isLogged={isLogged}/>
@@ -17,7 +19,7 @@ class Account extends Component {
 							<Card>
 								<CardHeader>Account</CardHeader>
 								<CardBody>
-									<CardText>Some Account detail</CardText>
+									<CardText>Email: {user.email}</CardText>
 								</CardBody>
 							</Card>
 						</div>

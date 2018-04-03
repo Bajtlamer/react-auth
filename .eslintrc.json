@@ -1,8 +1,14 @@
 {
     "env": {
-        "browser": true
-    },
-    "extends": "eslint:recommended",
+        "es6": true,
+        "node": true
+     },
+     "parserOptions": {
+       "ecmaVersion": 6,
+       "ecmaFeatures": {
+           "jsx": true
+       }
+     },
     "rules": {
         "indent": [
             "error",
@@ -19,6 +25,9 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "jshint.options": {
+            "esversion": 6
+        }
     }
 }

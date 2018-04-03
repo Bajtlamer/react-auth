@@ -11,7 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-  import { checkAuth } from '../services/AuthService';
+  import { checkAuth } from '../services/fireAuth';
 
 const Logination = props => {
   const { isLogged } = props;
@@ -40,7 +40,7 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    const { isLogged } = this.props;
+    const isLogged = checkAuth();
 
     return (
       <div>
@@ -54,7 +54,6 @@ export default class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 <Logination isLogged={isLogged}/>
-                {/* <NavLink href="/login/">Login</NavLink> */}
               </NavItem>
               <UncontrolledDropdown nav >
                 <DropdownToggle nav caret>
