@@ -14,19 +14,20 @@ import {
 } from 'reactstrap';
 import { checkAuth } from '../services/fireAuth';
 import { firebase } from '../firebase';
+import { doCreateUser } from '../firebase/db';
 import { Redirect } from 'react-router';
-
+import Loader from 'react-loader';
+import './navbar.css'
 const Logination = (props) => {
-  const { isLogged, doLogout } = props;
-
-  // let isLogged = checkAuth();
+const { isLogged, doLogout, currentUser } = props;
 
   if (isLogged === true) {
     return (
       <UncontrolledDropdown nav >
-        <DropdownToggle nav caret>
-          Options
-    </DropdownToggle>
+      {currentUser ?
+        (<DropdownToggle nav caret>
+          {currentUser.email} 
+        </DropdownToggle>) : (<div className="spinner"><Loader scale={0.40} /></div>)}
         <DropdownMenu >
           <DropdownItem>
             <NavLink href="/account/">Account</NavLink>
@@ -36,7 +37,7 @@ const Logination = (props) => {
           </DropdownItem>
           <DropdownItem divider />
           <DropdownItem>
-          <NavLink onClick={doLogout}>Logout</NavLink>
+            <NavLink onClick={doLogout}>Logout</NavLink>
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
@@ -55,22 +56,28 @@ class Navigation extends React.Component {
     this.state = {
       isOpen: false,
       isLogged: this.props.isLogged,
+      user: null
     };
+  }
+
+  getCurrentUserFromStore=()=>{
+    return JSON.parse(localStorage.getItem('user'));
   }
 
   logout = () => {
     let that = this;
-    firebase.auth.signOut().then(function(resp) {
+    firebase.auth.signOut().then(function (resp) {
       // console.log('Sign-out successful.');
       localStorage.setItem('user', null);
       that.setState({
-        isLogged: false
+        isLogged: false,
+        user: null
       });
-    }).catch(function(error) {
+    }).catch(function (error) {
       console.log(error);
     });
   }
-  
+
 
   toggle() {
     this.setState({
@@ -83,21 +90,21 @@ class Navigation extends React.Component {
 
     return (
       this.state.isLogged ? (
-      <div>
-        <Navbar color="faded" light expand="md">
-          <NavbarBrand href="/">Home</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <Logination isLogged={this.state.isLogged} doLogout={this.logout}/>
-            </Nav>
-          </Collapse>
-        </Navbar>
-        {children}
-      </div>
-      ):(
-        <Redirect to={{ pathname: '/login' }} />
-      )
+        <div>
+          <Navbar color="faded" light expand="md">
+            <NavbarBrand href="/">Home</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <Logination isLogged={this.state.isLogged} doLogout={this.logout} currentUser={this.getCurrentUserFromStore()} />
+              </Nav>
+            </Collapse>
+          </Navbar>
+          {children}
+        </div>
+      ) : (
+          <Redirect to={{ pathname: '/login' }} />
+        )
     );
   }
 }
