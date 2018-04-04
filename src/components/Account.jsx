@@ -12,19 +12,20 @@ class Account extends Component {
 
 		return (
 			<div>
-				<Navigation isLogged={isLogged}/>
-				<Container>
-					<Row>
-						<div className="col-4 offset-4">
-							<Card>
-								<CardHeader>Account</CardHeader>
-								<CardBody>
-									<CardText>Email: {user.email}</CardText>
-								</CardBody>
-							</Card>
-						</div>
-					</Row>
-				</Container>
+				<Navigation isLogged={isLogged}>
+					<Container>
+						<Row>
+							<div className="col-4 offset-4">
+								<Card>
+									<CardHeader>Account</CardHeader>
+									<CardBody>
+										<CardText>Email: {user.email}</CardText>
+									</CardBody>
+								</Card>
+							</div>
+						</Row>
+					</Container>
+				</Navigation>
 			</div>
 		)
 	}

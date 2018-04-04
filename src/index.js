@@ -9,7 +9,7 @@ import Register from './components/Register';
 import NotFound from './components/not-found';
 import Logout from './components/Logout';
 import Account from './components/Account';
-import { AuthRoute } from './components/Authroute'
+import AuthRoute from './components/Authroute'
 import { Switch } from 'react-router';
 
 ReactDOM.render(

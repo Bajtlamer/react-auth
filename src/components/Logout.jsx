@@ -8,7 +8,7 @@ class Logout extends Component {
 		// localStorage.setItem('user', null);
 		firebase.auth.signOut().then(function(resp) {
 			  console.log('Sign-out successful.');
-			  localStorage.setItem('user', null);
+				localStorage.setItem('user', null);
 			}).catch(function(error) {
 			  console.log(error);
 			});

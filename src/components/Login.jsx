@@ -14,7 +14,8 @@ import {
 	Input, 
 	Label, 
 	Row, 
-	Alert
+	Alert,
+	Jumbotron
 } from "reactstrap";
 import "./Login.css";
 import Navigation from './Navbar';
@@ -69,12 +70,12 @@ class Login extends Component {
 		
 		auth.doSignInWithEmailAndPassword(username, password)
       	.then((user) => {
-      		console.log(user);
+      		// console.log(user);
 	        
 	        localStorage.setItem('user', JSON.stringify(user));
 	        this.setState({
 	        	redirectToReferrer: true, 
-	        	user: user,
+	        	// user: user,
 	        	logging: false 
 	        });
 	        // history.push(routes.HOME);
@@ -82,7 +83,7 @@ class Login extends Component {
       	.catch(error => {
       		// console.log(error);
       		this.setState({ 
-      			user: null,
+      			// user: null,
 				error: error.message, 
 				logging: false
 	      	});
@@ -127,8 +128,9 @@ class Login extends Component {
     }
 		return (
 			<div>
-				<Navigation />
+				{/* <Navigation /> */}
 				<Container>
+					<Jumbotron>
 					<Row>
 						<div className="col-4 offset-4">
 							<Card>
@@ -160,6 +162,7 @@ class Login extends Component {
 							</Card>
 						</div>
 					</Row>
+					</Jumbotron>
 				</Container>
 			</div>
 		);
