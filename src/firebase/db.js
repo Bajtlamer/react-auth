@@ -11,7 +11,7 @@ export const doCreateUser = (username, email) =>
 export const onceGetUsers = () =>
   db.ref('users').once('value');
 
-export const onceGetTrips = () =>
-  db.ref('flexbusapp/trips').once('value');
+export const getTrips = () =>
+  db.ref('/trips').once('value');
 
 // Other db APIs ...

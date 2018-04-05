@@ -11,11 +11,12 @@ import Logout from './components/Logout';
 import Account from './components/Account';
 import AuthRoute from './components/Authroute'
 import { Switch } from 'react-router';
+import Dashboard from './components/dashboard';
 
 ReactDOM.render(
     <Router>
         <Switch>
-            <AuthRoute exact path="/" component={App} />
+            <AuthRoute exact path="/" component={Dashboard} />
             <AuthRoute exact path="/account" component={Account} />
             <Route exact path="/login" render = {props => <Login {...props} />} />
             <Route exact path="/logout" render = {props => <Logout {...props} />} />

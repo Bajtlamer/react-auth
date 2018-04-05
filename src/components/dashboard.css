@@ -1,0 +1,9 @@
+@media all and (min-width: 480px) {
+    .dashboard {
+      border-top: 1px solid #cfcfcf;
+    }
+    .navigation {
+      /* border-bottom: 1px solid #cfcfcf; */
+    }
+  
+  }

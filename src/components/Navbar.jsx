@@ -18,6 +18,8 @@ import { doCreateUser } from '../firebase/db';
 import { Redirect } from 'react-router';
 import Loader from 'react-loader';
 import './navbar.css'
+
+
 const Logination = (props) => {
 const { isLogged, doLogout, currentUser } = props;
 
