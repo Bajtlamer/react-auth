@@ -1,0 +1,10 @@
+@media all and (min-width: 480px) {
+}
+    .container.dashboard {
+      /* border-top: 1px solid #cfcfcf; */
+      margin: 30px;
+    }
+
+  .container {
+    margin: 8px;
+  }

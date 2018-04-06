@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Collapse,
+  Container,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -21,15 +22,15 @@ import './navbar.css'
 
 
 const Logination = (props) => {
-const { isLogged, doLogout, currentUser } = props;
+  const { isLogged, doLogout, currentUser } = props;
 
   if (isLogged === true) {
     return (
       <UncontrolledDropdown nav >
-      {currentUser ?
-        (<DropdownToggle nav caret>
-          {currentUser.email} 
-        </DropdownToggle>) : (<div className="spinner"><Loader scale={0.40} /></div>)}
+        {currentUser ?
+          (<DropdownToggle nav caret>
+            {currentUser.email}
+          </DropdownToggle>) : (<div className="spinner"><Loader scale={0.40} /></div>)}
         <DropdownMenu >
           <DropdownItem>
             <NavLink href="/account/">Account</NavLink>
@@ -62,7 +63,7 @@ class Navigation extends React.Component {
     };
   }
 
-  getCurrentUserFromStore=()=>{
+  getCurrentUserFromStore = () => {
     return JSON.parse(localStorage.getItem('user'));
   }
 
@@ -93,14 +94,16 @@ class Navigation extends React.Component {
     return (
       this.state.isLogged ? (
         <div>
-          <Navbar color="faded" light expand="md">
-            <NavbarBrand href="/">Home</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                <Logination isLogged={this.state.isLogged} doLogout={this.logout} currentUser={this.getCurrentUserFromStore()} />
-              </Nav>
-            </Collapse>
+          <Navbar color="light" light expand="sm navbar">
+            <Container>
+              <NavbarBrand href="/">Home</NavbarBrand>
+              <NavbarToggler onClick={this.toggle} />
+              <Collapse isOpen={this.state.isOpen} navbar>
+                <Nav className="ml-auto" navbar>
+                  <Logination isLogged={this.state.isLogged} doLogout={this.logout} currentUser={this.getCurrentUserFromStore()} />
+                </Nav>
+              </Collapse>
+            </Container>
           </Navbar>
           {children}
         </div>

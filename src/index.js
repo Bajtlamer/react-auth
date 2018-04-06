@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { Switch } from 'react-router';
 import Login from './components/Login';
 import Register from './components/Register';
 import NotFound from './components/not-found';
 import Logout from './components/Logout';
 import Account from './components/Account';
 import AuthRoute from './components/Authroute'
-import { Switch } from 'react-router';
-import Dashboard from './components/dashboard';
+import Dashboard from './components/Dashboard';
+import registerServiceWorker from './registerServiceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 ReactDOM.render(
     <Router>

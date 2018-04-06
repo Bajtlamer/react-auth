@@ -3,3 +3,7 @@
     right: 50px;
     z-index: 9999;
   }
+.navbar{
+  border-top: 2px solid red;
+  border-bottom: 1px solid #cdcd;
+}
