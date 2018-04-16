@@ -61,7 +61,7 @@ class Dashboard extends React.Component {
             // userTrips = snap.val();
             snap.forEach((trip) => {
                 // let value = { label: trip.val().trasa, value: i };
-                console.log(trip.val());
+                //console.log(trip.val());
                 userTrips.push(trip.val());
                 // i++;
             });
@@ -85,7 +85,7 @@ class Dashboard extends React.Component {
             <div className="">
                 <Navigation isLogged={checkAuth()} >
                     <Container className="dashboard">
-                        <h1 className="display-4 text-center">Dashboard</h1>
+                        <h1 className="display-4 text-center">Panel řidiče</h1>
                     </Container>
                     <Container>
                         <Row>

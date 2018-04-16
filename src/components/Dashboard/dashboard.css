@@ -2,9 +2,17 @@
 }
     .container.dashboard {
       /* border-top: 1px solid #cfcfcf; */
-      margin: 30px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+
+      text-align: left;
     }
 
   .container {
     margin: 8px;
   }
+
+  .table td.central,
+  .table th.central {
+    text-align: center;   
+ }
