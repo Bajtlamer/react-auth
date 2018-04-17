@@ -5,6 +5,7 @@ import Joblist from './Joblist';
 import { checkAuth } from '../../services/fireAuth';
 import { db, firebase } from '../../firebase';
 import { Container, Button, Row, Col } from "reactstrap";
+import MonthBox from "../monthbox";
 import 'react-select/dist/react-select.css';
 import './dashboard.css'
 
@@ -12,10 +13,15 @@ class Dashboard extends React.Component {
     state = {
         selectedOption: '',
         trips: [],
-        userTrips: null
+        month: null,
+        userTrips: null,
+        totalBruto: 0,
+        totalHandling: 0,
+        totalDiets: 0
     }
 
     componentWillMount() {
+        this.getCurrentMonth();
         this.getTrips();
         this.getUsersTrips();
     }
@@ -52,23 +58,53 @@ class Dashboard extends React.Component {
         // console.log(user);
     }
 
-    getUsersTrips = () => {
+    getUsersTrips = (month) => {
         const userId = JSON.parse(localStorage.getItem('user')).uid;
         db.getDriversTrips(userId).on('value', snap => {
             let userTrips = [];
             // trip = snap.val();
             // trip.id = tripId;
             // userTrips = snap.val();
+            var totalBruto = 0;
+            var totalHandling = 0;
+            var totalDiets = 0;
             snap.forEach((trip) => {
                 // let value = { label: trip.val().trasa, value: i };
                 //console.log(trip.val());
+                // snap.forEach(function(item) {console.log(item.val().trip.prijem_ridic_bruto);
+                //     totalBruto += item.val().trip.prijem_ridic_bruto;
+                //  });
+                // console.log(trip.val().trip.prijem_ridic_bruto);
+                 totalBruto += trip.val().trip.prijem_ridic_bruto;
+                 totalHandling += trip.val().trip.handlink_kc;
+                 totalDiets += trip.val().trip.diety_euro;
+                //  console.log(totalHandling);
+                //  console.log(trip.val().trip.handling);
+
                 userTrips.push(trip.val());
                 // i++;
             });
-            this.setState({ userTrips });
+            this.setState({ userTrips, totalBruto, totalHandling, totalDiets });
         });
     }
 
+    getCurrentMonth () {
+        if(this.state.month){
+            return this.state.month;
+        }else{
+            var d = new Date();
+            var month = d.getMonth();
+                month=month+1;
+        }
+        this.setState({month});
+        // return n+1;
+    }
+    
+    onMonthChange = (month) => {
+        this.setState({ month });
+        this.getUsersTrips(month);
+		console.log('Boolean Select value changed to', month);
+    }
 
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
@@ -82,7 +118,7 @@ class Dashboard extends React.Component {
         const value = selectedOption && selectedOption.value;
 
         return (
-            <div className="">
+            <div>
                 <Navigation isLogged={checkAuth()} >
                     <Container className="dashboard">
                         <h1 className="display-4 text-center">Panel řidiče</h1>
@@ -101,13 +137,21 @@ class Dashboard extends React.Component {
                                         <p>Načítám...</p>
                                     )}
                             </Col>
+                            <Col className="col-md-2">
+                                <MonthBox onChanged={()=>this.onMonthChange} month={this.state.month}/>
+                            </Col>
                             <Col>
                                 <Button color="primary" onClick={this.onAddButtonPress} >Přidat</Button>
                             </Col>
                         </Row>
                     </Container>
                     <Container>
-                        <Joblist data={this.state.userTrips}/>
+                        <Joblist 
+                            data={this.state.userTrips} 
+                            totalBruto={this.state.totalBruto} 
+                            totalHandling={this.state.totalHandling}
+                            totalDiets={this.state.totalDiets}
+                            />
                     </Container>
                 </Navigation>
             </div>

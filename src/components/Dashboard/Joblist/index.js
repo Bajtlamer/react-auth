@@ -18,12 +18,34 @@ const Tbody = (props) => {
 
 }
 
+
+const Summary = (props) => {
+  const { sub3, sub2, sub1 } = props;
+  return <tr className="bg-primary">
+  <td colSpan="3" className="text-white">Součet</td>
+  <td className="central text-white">{sub1}</td>
+  <td className="central text-white">{sub2}</td>
+  <td className="central text-white">{sub3}</td>
+</tr>;
+  
+}
+
+const Subtotal = (props) => {
+  const { sub3, sub2, sub1 } = props;
+  return <tr>
+  <td  colSpan="5" className="text-success">Celkem</td>
+  <td className="central text-success">{props.subtotal}</td>
+</tr>;
+  
+}
+
+
 export default class Joblist extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const { data } = this.props;
+    const { data, totalBruto, totalHandling, totalDiets } = this.props;
     // console.log(data);
     return (
       <div>
@@ -43,6 +65,8 @@ export default class Joblist extends React.Component {
             </thead>
             <tbody>
               <Tbody data={data} />
+              <Summary sub1={totalDiets} sub2={totalHandling} sub3={totalBruto}/>
+              {/* <Subtotal subtotal={totalHandling+totalBruto}/> */}
             </tbody>
           </Table>
         ) : (

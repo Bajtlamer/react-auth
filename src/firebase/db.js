@@ -24,7 +24,7 @@ export const onceGetUsers = () =>
   export const getTripById = (id) =>
     db.ref('/trips/' + id).once('value');
 
-    export const getDriversTrips = (driverId) =>
+    export const getDriversTrips = (driverId, month) =>
     db.ref('/userTrips/').orderByChild('userId').equalTo(driverId);
   
 // Other db APIs ...
