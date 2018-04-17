@@ -1,17 +1,21 @@
 import React from 'react';
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
+import TrashAlt from 'react-icons/lib/fa/trash';
 
 const Tbody = (props) => {
   const data = props.data;
-  //console.log(data);
+  // console.log(data);
   const listItems = data.map((row, i) =>
-    <tr key={i}>
+    <tr key={row.key}>
       <td>{i+1}</td>
-      <td className="central">{row.trip.linka}</td>
-      <td>{row.trip.trasa}</td>
-      <td className="central">{row.trip.diety_euro}</td>
-      <td className="central">{row.trip.handlink_kc}</td>
-      <td className="central">{row.trip.prijem_ridic_bruto}</td>
+      <td className="central">{row.val().linka}</td>
+      <td>{row.val().trasa}</td>
+      <td className="central">{row.val().diety_euro}</td>
+      <td className="central">{row.val().handlink_kc}</td>
+      <td className="central">{row.val().prijem_ridic_bruto}</td>
+      <td className="central">
+        <Button color="danger" size="sm" onClick={()=>props.onDelete(row.key)}>Smazat</Button>
+      </td>
     </tr>
   );
   return listItems
@@ -26,12 +30,12 @@ const Summary = (props) => {
   <td className="central text-white">{sub1}</td>
   <td className="central text-white">{sub2}</td>
   <td className="central text-white">{sub3}</td>
+  <td className="central text-white"></td>
 </tr>;
   
 }
 
 const Subtotal = (props) => {
-  const { sub3, sub2, sub1 } = props;
   return <tr>
   <td  colSpan="5" className="text-success">Celkem</td>
   <td className="central text-success">{props.subtotal}</td>
@@ -41,11 +45,8 @@ const Subtotal = (props) => {
 
 
 export default class Joblist extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    const { data, totalBruto, totalHandling, totalDiets } = this.props;
+    const { data, totalBruto, totalHandling, totalDiets, onDeleteClick } = this.props;
     // console.log(data);
     return (
       <div>
@@ -61,10 +62,11 @@ export default class Joblist extends React.Component {
                 <th className="central">Diety Eur</th>
                 <th className="central">Handling Kč</th>
                 <th className="central">Příjem Bruto</th>
+                <th className="central">X</th>
               </tr>
             </thead>
             <tbody>
-              <Tbody data={data} />
+              <Tbody data={data} onDelete={onDeleteClick}/>
               <Summary sub1={totalDiets} sub2={totalHandling} sub3={totalBruto}/>
               {/* <Subtotal subtotal={totalHandling+totalBruto}/> */}
             </tbody>

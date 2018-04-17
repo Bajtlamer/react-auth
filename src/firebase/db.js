@@ -8,23 +8,22 @@ export const doCreateUser = (username, email) =>
     email,
   });
 
-export const addTripToUser = (userId, month, trip) =>
-  db.ref(`userTrips/`).push({
-    userId,
-    month,
-    trip
-  });
+export const addTripToUser = (userId, month, year, trip) =>
+    db.ref(`userTrips/` + userId + '/' + year + '/' + month + '/').push(trip);
 
 export const onceGetUsers = () =>
-  db.ref('users').once('value');
+    db.ref('users').once('value');
 
-  export const getTrips = () =>
+export const getTrips = () =>
     db.ref('/trips').once('value');
   
-  export const getTripById = (id) =>
+export const getTripById = (id) =>
     db.ref('/trips/' + id).once('value');
 
-    export const getDriversTrips = (driverId, month) =>
-    db.ref('/userTrips/').orderByChild('userId').equalTo(driverId);
+export const removeDriversTrips = (driverId, month, year, key) =>
+    db.ref('/userTrips/' + driverId + '/' + year + '/' + month + '/' + key);
+
+    export const getDriversTrips = (driverId, month, year) =>
+    db.ref('/userTrips/' + driverId + '/' + year + '/' + month + '/');
   
 // Other db APIs ...

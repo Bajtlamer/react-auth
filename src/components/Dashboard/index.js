@@ -3,7 +3,7 @@ import Select from 'react-select';
 import Navigation from '../Navbar';
 import Joblist from './Joblist';
 import { checkAuth } from '../../services/fireAuth';
-import { db, firebase } from '../../firebase';
+import { db } from '../../firebase';
 import { Container, Button, Row, Col } from "reactstrap";
 import MonthBox from "../monthbox";
 import 'react-select/dist/react-select.css';
@@ -14,6 +14,7 @@ class Dashboard extends React.Component {
         selectedOption: '',
         trips: [],
         month: null,
+        year: null,
         userTrips: null,
         totalBruto: 0,
         totalHandling: 0,
@@ -21,9 +22,10 @@ class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        this.getCurrentMonth();
+        this.getCurrentYear();
+        // this.getCurrentMonth();
         this.getTrips();
-        this.getUsersTrips();
+        this.getUsersTrips(this.getCurrentMonth());
     }
 
     getTrips = () => {
@@ -41,51 +43,60 @@ class Dashboard extends React.Component {
         });
     }
 
+    onDeleteButtonClick = (key) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { year, month } = this.state;
+
+        db.removeDriversTrips(user.uid, month, year, key).remove(err => {
+            if(err){
+                console.log(err);
+            }
+        });
+    }
+
     onAddButtonPress = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         const tripId = this.state.selectedOption.value;
+        const { year, month } = this.state;
         let trip = null;
+
         db.getTripById(tripId).then(snap => {
             trip = snap.val();
-            trip.id = tripId;
-            // console.log(trip);
-            // this.setState({trip});
-            db.addTripToUser(user.uid, 4, trip);
+            db.addTripToUser(user.uid, month, year, trip);
         });
-        // console.log(this.state.trip);
-        // let trip = this.state.trip;
-            // trip.id = tripId;
-        // console.log(user);
     }
 
     getUsersTrips = (month) => {
         const userId = JSON.parse(localStorage.getItem('user')).uid;
-        db.getDriversTrips(userId).on('value', snap => {
+        const year = this.getCurrentYear();
+
+        db.getDriversTrips(userId, month, year).on('value', snap => {
             let userTrips = [];
-            // trip = snap.val();
-            // trip.id = tripId;
-            // userTrips = snap.val();
             var totalBruto = 0;
             var totalHandling = 0;
             var totalDiets = 0;
+            
             snap.forEach((trip) => {
-                // let value = { label: trip.val().trasa, value: i };
-                //console.log(trip.val());
-                // snap.forEach(function(item) {console.log(item.val().trip.prijem_ridic_bruto);
-                //     totalBruto += item.val().trip.prijem_ridic_bruto;
-                //  });
-                // console.log(trip.val().trip.prijem_ridic_bruto);
-                 totalBruto += trip.val().trip.prijem_ridic_bruto;
-                 totalHandling += trip.val().trip.handlink_kc;
-                 totalDiets += trip.val().trip.diety_euro;
-                //  console.log(totalHandling);
-                //  console.log(trip.val().trip.handling);
-
-                userTrips.push(trip.val());
-                // i++;
+                 totalBruto += trip.val().prijem_ridic_bruto;
+                 totalHandling += trip.val().handlink_kc;
+                 totalDiets += trip.val().diety_euro;
+                
+                userTrips.push(trip);
+                // console.log(trip.key);
             });
             this.setState({ userTrips, totalBruto, totalHandling, totalDiets });
         });
+    }
+
+    getCurrentYear () {
+        if(this.state.year){
+            return this.state.year;
+        }else{
+            var d = new Date();
+            var year = d.getFullYear();
+        }
+        this.setState({year});
+        return year;
     }
 
     getCurrentMonth () {
@@ -97,20 +108,19 @@ class Dashboard extends React.Component {
                 month=month+1;
         }
         this.setState({month});
-        // return n+1;
+        return month;
     }
     
     onMonthChange = (month) => {
+        if(!month){
+            month = this.getCurrentMonth();
+        }
         this.setState({ month });
         this.getUsersTrips(month);
-		console.log('Boolean Select value changed to', month);
     }
 
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
-        if (selectedOption) {
-            // console.log(`Selected: ${selectedOption.value}`);
-        }
     }
 
     render() {
@@ -151,6 +161,7 @@ class Dashboard extends React.Component {
                             totalBruto={this.state.totalBruto} 
                             totalHandling={this.state.totalHandling}
                             totalDiets={this.state.totalDiets}
+                            onDeleteClick={this.onDeleteButtonClick}
                             />
                     </Container>
                 </Navigation>

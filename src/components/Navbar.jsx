@@ -6,16 +6,13 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
   NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
-import { checkAuth } from '../services/fireAuth';
 import { firebase } from '../firebase';
-import { doCreateUser } from '../firebase/db';
 import { Redirect } from 'react-router';
 import Loader from 'react-loader';
 import './navbar.css'

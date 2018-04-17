@@ -14,12 +14,9 @@ import {
 	Input, 
 	Label, 
 	Row, 
-	Alert,
-	Jumbotron
+	Alert
 } from "reactstrap";
 import "./Login.css";
-import Navigation from './Navbar';
-import axios from 'axios';
 import { auth } from '../firebase';
 
 class Login extends Component {
@@ -130,7 +127,6 @@ class Login extends Component {
 			<div>
 				{/* <Navigation /> */}
 				<Container>
-					<Jumbotron>
 					<Row>
 						<div className="col-4 offset-4">
 							<Card>
@@ -162,7 +158,6 @@ class Login extends Component {
 							</Card>
 						</div>
 					</Row>
-					</Jumbotron>
 				</Container>
 			</div>
 		);
