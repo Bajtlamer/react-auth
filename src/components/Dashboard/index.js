@@ -4,7 +4,7 @@ import Navigation from '../Navbar';
 import Joblist from './Joblist';
 import { checkAuth } from '../../services/fireAuth';
 import { db } from '../../firebase';
-import { Container, Button, Row, Col } from "reactstrap";
+import { Container, Button, Row, Col, Alert } from "reactstrap";
 import MonthBox from "../monthbox";
 import { CSVLink, CSVDownload } from 'react-csv';
 import DownloadIcon from 'react-icons/lib/ti/download-outline';
@@ -20,7 +20,7 @@ const DownlodAsCsv = (props) => {
         arr.push(row.val())
 
     });
-    return <CSVLink data={arr} separator={";"}><DownloadIcon size={20}/>Uložit jako CSV soubor</CSVLink>;
+    return <CSVLink data={arr} separator={";"}><DownloadIcon size={20}/>Exportovat do CSV</CSVLink>;
 }
 
 
@@ -30,6 +30,7 @@ class Dashboard extends React.Component {
         trips: [],
         month: null,
         year: null,
+        error: null,
         userTrips: null,
         totalBruto: 0,
         totalHandling: 0,
@@ -61,7 +62,7 @@ class Dashboard extends React.Component {
     onDeleteButtonClick = (key) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { year, month } = this.state;
-
+        
         db.removeDriversTrips(user.uid, month, year, key).remove(err => {
             if(err){
                 console.log(err);
@@ -78,6 +79,8 @@ class Dashboard extends React.Component {
         db.getTripById(tripId).then(snap => {
             trip = snap.val();
             db.addTripToUser(user.uid, month, year, trip);
+        }).then(err => {
+            // console.log(err);
         });
     }
 
@@ -148,6 +151,7 @@ class Dashboard extends React.Component {
                     <Container className="dashboard">
                         <h1 className="display-4 text-center">Panel řidiče</h1>
                     </Container>
+                    <Container>{this.state.error}</Container>
                     <Container>
                         <Row>
                             <Col>
@@ -179,6 +183,7 @@ class Dashboard extends React.Component {
                             onDeleteClick={this.onDeleteButtonClick}
                             />
                     </Container>
+                    
                     <Container>
                         {this.state.userTrips ? <DownlodAsCsv data={this.state.userTrips} />:''}
                     </Container>

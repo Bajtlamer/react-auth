@@ -130,7 +130,7 @@ class Login extends Component {
 					<Row>
 						<div className="col-4 offset-4">
 							<Card>
-								<CardHeader>Login page</CardHeader>
+								<CardHeader>Přihlášení do systému FlixBUS</CardHeader>
 								<CardBody>
 								{this.state.error && <Alert color="danger">{this.state.error}</Alert>}
 									<Form onSubmit={this.handleSubmit}>
@@ -138,17 +138,17 @@ class Login extends Component {
 											<Label for="exampleEmail">Email</Label>
 											<Input type="email" name="username" id="loginEmail" placeholder="Email" onChange={this.handleChange} />
 											{this.state.submitted && !this.state.username &&
-												<div className="help-block">Username required</div>
+												<div className="help-block">Vyžadován email</div>
 											}
 										</FormGroup>
 										<FormGroup>
-											<Label for="password">Password</Label>
+											<Label for="password">Heslo</Label>
 											<Input type="password" name="password" id="loginPassword" placeholder="Password" onChange={this.handleChange} />
 											{this.state.submitted && !this.state.password &&
-												<div className="help-block">Password required</div>
+												<div className="help-block">Vyžadováno heslo</div>
 											}
 										</FormGroup>
-										<Button color="primary" className="btnMineWidth" onClick={() => this.handleSubmit(this)}>Login</Button>
+										<Button size="sm" color="primary" className="btnMineWidth" onClick={() => this.handleSubmit(this)}>Přihlásit</Button>
 										
 										{this.state.logging &&
 											<img alt="Loader..." className="loginLoader" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />

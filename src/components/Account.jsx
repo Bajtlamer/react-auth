@@ -17,7 +17,7 @@ class Account extends Component {
 						<Row>
 							<div className="col-4 offset-4">
 								<Card>
-									<CardHeader>Account</CardHeader>
+									<CardHeader>Uživatelský ůčet</CardHeader>
 									<CardBody>
 										<CardText>Email: {user.email}</CardText>
 									</CardBody>

@@ -30,20 +30,20 @@ const Logination = (props) => {
           </DropdownToggle>) : (<div className="spinner"><Loader scale={0.40} /></div>)}
         <DropdownMenu >
           <DropdownItem>
-            <NavLink href="/account/">Account</NavLink>
+            <NavLink href="/account/">Uživatelský účet</NavLink>
           </DropdownItem>
           <DropdownItem>
-            <NavLink href="/register/">Register</NavLink>
+            <NavLink href="/register/">Administrace</NavLink>
           </DropdownItem>
           <DropdownItem divider />
           <DropdownItem>
-            <NavLink onClick={doLogout}>Logout</NavLink>
+            <NavLink onClick={doLogout}>Odhlásit</NavLink>
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
     )
   } else {
-    return <NavLink href="/login/">Login</NavLink>
+    return <NavLink href="/login/">Přihlásit</NavLink>
   }
 }
 
@@ -93,7 +93,7 @@ class Navigation extends React.Component {
         <div>
           <Navbar color="light" light expand="sm navbar">
             <Container>
-              <NavbarBrand href="/">Home</NavbarBrand>
+              <NavbarBrand href="/">Panel řidiče</NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
