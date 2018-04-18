@@ -6,8 +6,23 @@ import { checkAuth } from '../../services/fireAuth';
 import { db } from '../../firebase';
 import { Container, Button, Row, Col } from "reactstrap";
 import MonthBox from "../monthbox";
+import { CSVLink, CSVDownload } from 'react-csv';
+import DownloadIcon from 'react-icons/lib/ti/download-outline';
 import 'react-select/dist/react-select.css';
 import './dashboard.css'
+
+
+
+const DownlodAsCsv = (props) => {
+    const { data } = props;
+    let arr = [];
+    const array = data.map((row) => {
+        arr.push(row.val())
+
+    });
+    return <CSVLink data={arr} separator={";"}><DownloadIcon size={20}/>Uložit jako CSV soubor</CSVLink>;
+}
+
 
 class Dashboard extends React.Component {
     state = {
@@ -163,6 +178,9 @@ class Dashboard extends React.Component {
                             totalDiets={this.state.totalDiets}
                             onDeleteClick={this.onDeleteButtonClick}
                             />
+                    </Container>
+                    <Container>
+                        {this.state.userTrips ? <DownlodAsCsv data={this.state.userTrips} />:''}
                     </Container>
                 </Navigation>
             </div>
