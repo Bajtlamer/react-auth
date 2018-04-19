@@ -33,7 +33,7 @@ const Logination = (props) => {
             <NavLink href="/account/">Uživatelský účet</NavLink>
           </DropdownItem>
           <DropdownItem>
-            <NavLink href="/register/">Administrace</NavLink>
+            <NavLink href="/admin/">Administrace</NavLink>
           </DropdownItem>
           <DropdownItem divider />
           <DropdownItem>

@@ -9,6 +9,7 @@ import Logout from './components/Logout';
 import Account from './components/Account';
 import AuthRoute from './components/Authroute'
 import Dashboard from './components/Dashboard';
+import Administration from './components/Administration';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -18,6 +19,7 @@ ReactDOM.render(
         <Switch>
             <AuthRoute exact path="/" component={Dashboard} />
             <AuthRoute exact path="/account" component={Account} />
+            <AuthRoute exact path="/admin" component={Administration} />
             <Route exact path="/login" render = {props => <Login {...props} />} />
             <Route exact path="/logout" render = {props => <Logout {...props} />} />
             <Route exact path="/register"  render = {props => <Register {...props} />}/>

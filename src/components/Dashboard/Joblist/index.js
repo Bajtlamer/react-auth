@@ -11,7 +11,6 @@ const Tbody = (props) => {
 	
 	const BodyRow = (props) => {
 		const { row, index, onDelete } = props;
-		// const bt = <Delete size={26} style={style} onClick={()=>this.toggle} />;
 		return (
 			<tr key={index}>
 				<td>{index + 1}</td>
@@ -21,7 +20,6 @@ const Tbody = (props) => {
 				<td className="central">{row.handlink_kc}</td>
 				<td className="central">{row.prijem_ridic_bruto}</td>
 				<td className="central">
-					{/* <Delete size={26} style={style} onClick={onDelete} /> */}
 					<DeleteModalBox onDelete={onDelete} trasa={row.trasa}/>
 				</td>
 			</tr>

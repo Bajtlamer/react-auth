@@ -4,9 +4,10 @@ body {
   font-family: sans-serif;
   font-size: 14px;
 }
-.nav-link {
+.dropdown-item .nav-link {
   /* display: block; */
   padding: 0;
+  cursor: pointer;
 }
 
 .dropdown-item {
@@ -30,3 +31,16 @@ body {
   border-bottom: 1px solid #cdcd;
   padding: 0;
 }
+
+.nav-item {
+  cursor: pointer;
+}
+
+.tab-content {
+  padding: 20px;
+
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
+
