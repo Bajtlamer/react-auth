@@ -91,7 +91,7 @@ class Navigation extends React.Component {
     return (
       this.state.isLogged ? (
         <div>
-          <Navbar color="light" light expand="sm navbar">
+          <Navbar color="light" light expand="sm dnavbar">
             <Container>
               <NavbarBrand href="/">Panel řidiče</NavbarBrand>
               <NavbarToggler onClick={this.toggle} />

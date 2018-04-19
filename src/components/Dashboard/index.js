@@ -7,20 +7,21 @@ import { db } from '../../firebase';
 import { Container, Button, Row, Col, Alert } from "reactstrap";
 import MonthBox from "../monthbox";
 import { CSVLink, CSVDownload } from 'react-csv';
-import DownloadIcon from 'react-icons/lib/ti/download-outline';
+import { FaCloudDownload } from 'react-icons/lib/fa';
 import 'react-select/dist/react-select.css';
 import './dashboard.css'
 
 
 
 const DownlodAsCsv = (props) => {
-    const { data } = props;
+    const { data, year, month, user } = props;
+    const filename = user.email.split('@')[0] + '-' + month + '-' + year + ".csv";
     let arr = [];
     const array = data.map((row) => {
         arr.push(row.val())
-
     });
-    return <CSVLink data={arr} separator={";"}><DownloadIcon size={20}/>Exportovat do CSV</CSVLink>;
+
+    return <CSVLink data={arr} separator={";"} className="dlink" filename={filename}><FaCloudDownload size={24} />&nbsp;Uložit do souboru CSV</CSVLink>;
 }
 
 
@@ -31,6 +32,7 @@ class Dashboard extends React.Component {
         month: null,
         year: null,
         error: null,
+        user: null,
         userTrips: null,
         totalBruto: 0,
         totalHandling: 0,
@@ -38,6 +40,9 @@ class Dashboard extends React.Component {
     }
 
     componentWillMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        this.setState({user});
         this.getCurrentYear();
         // this.getCurrentMonth();
         this.getTrips();
@@ -45,7 +50,6 @@ class Dashboard extends React.Component {
     }
 
     getTrips = () => {
-        // var commentsRef = firebase.db.ref('/trips');
         db.getTrips().then((snap) => {
             let trips = [];
             let i = 0;
@@ -185,7 +189,13 @@ class Dashboard extends React.Component {
                     </Container>
                     
                     <Container>
-                        {this.state.userTrips ? <DownlodAsCsv data={this.state.userTrips} />:''}
+                        {this.state.userTrips ? 
+                        <DownlodAsCsv 
+                            data={this.state.userTrips} 
+                            year={this.state.year} 
+                            month={this.state.month}
+                            user={this.state.user}
+                        /> : ''}
                     </Container>
                 </Navigation>
             </div>

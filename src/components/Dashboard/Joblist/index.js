@@ -34,14 +34,17 @@ const Tbody = (props) => {
 
 }
 
+function formatNumber (num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+}
 
 const Summary = (props) => {
 	const { sub3, sub2, sub1 } = props;
 	return <tr className="bg-primary">
 		<td colSpan="3" className="text-white">Součet</td>
-		<td className="central text-white">{sub1}</td>
-		<td className="central text-white">{sub2}</td>
-		<td className="central text-white">{sub3}</td>
+		<td className="central text-white">{formatNumber(sub1)},-</td>
+		<td className="central text-white">{formatNumber(sub2)},-</td>
+		<td className="central text-white">{formatNumber(sub3)},-</td>
 		<td className="central text-white"></td>
 	</tr>;
 

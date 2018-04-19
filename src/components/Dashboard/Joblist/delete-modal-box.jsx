@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Delete from 'react-icons/lib/ti/delete';
+import ReactTooltip from 'react-tooltip';
+
 // import ModalBox from 'modalbox';
 
 class DeleteModalBox extends React.Component {
@@ -25,7 +27,7 @@ class DeleteModalBox extends React.Component {
     return (
       <div>
         {/* <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button> */}
-        <Delete size={26} style={style} onClick={this.toggle} />
+        <Delete size={26} style={style} onClick={this.toggle} data-tip="Smazat záznam" data-for='delete'/>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Mazání záznamu</ModalHeader>
           <ModalBody>
@@ -36,6 +38,7 @@ class DeleteModalBox extends React.Component {
             <Button size="sm" color="secondary" onClick={this.toggle}>Storno</Button>
           </ModalFooter>
         </Modal>
+        <ReactTooltip place="left" id='delete' effect='solid' delayShow={1000}/>
       </div>
     );
   }

@@ -2,4 +2,31 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  font-size: 14px;
+}
+.nav-link {
+  /* display: block; */
+  padding: 0;
+}
+
+.dropdown-item {
+  font-size: 14px;
+}
+
+.btn {
+  padding: 7px 16px;
+  font-size: 14px;
+}
+
+.Select-control {
+  border-radius: 0;
+}
+
+.Select div {
+  /* height: 32px; */
+}
+.navbar {
+  border-top: 2px solid red;
+  border-bottom: 1px solid #cdcd;
+  padding: 0;
 }
