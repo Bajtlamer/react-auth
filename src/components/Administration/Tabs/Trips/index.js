@@ -4,13 +4,14 @@ import { db } from '../../../../firebase';
 import Loader from 'react-loader';
 import Delete from 'react-icons/lib/ti/delete';
 import FaTrashO from 'react-icons/lib/fa';
+import DeleteModalBox from '../../../Dashboard/Joblist/delete-modal-box';
 
 const xxx = ()=><FaTrashO />
 
-const DeleteButton = (cell, row, rowIndex, formatExtraData) => {
+const DeleteButton = ( cell, row, rowIndex, formatExtraData ) => {
     const style = { cursor: 'hand', color: 'red' };
     return (
-        <Delete size={26} style={style} onClick={this.toggle} data-tip="Smazat záznam" data-for='delete'/>
+        <DeleteModalBox onDelete={()=>formatExtraData.onDelete(row.key)} trasa={row.trasa} />
     );
   }
 
@@ -23,6 +24,15 @@ export default class Table extends React.Component {
     state = {
         trips: null
     }
+
+    onDeleteButtonClick = (id) => {
+		db.deleteTripTemplate(id).remove(err => {
+			if (err) {
+				console.log(err);
+			}
+		});
+	}
+
 
     componentDidMount () {
         this.getTrips();
@@ -45,6 +55,7 @@ export default class Table extends React.Component {
     
 
     render (){
+        const onDelete = this.onDeleteButtonClick;
         const columns = [{
             dataField: 'linka',
             text: 'Linka'
@@ -65,6 +76,9 @@ export default class Table extends React.Component {
             text: 'X',
             headerAlign: 'center',
             formatter: DeleteButton,
+            formatExtraData: {
+                onDelete
+            },
             style: {
                 "textAlign":'center'
               },

@@ -15,10 +15,13 @@ export const onceGetUsers = () =>
     db.ref('users').once('value');
 
 export const getTrips = () =>
-    db.ref('/trips').orderByChild('trasa').once('value');
+    db.ref('/trips/').orderByChild('trasa').once('value');
 
 export const addTrip = (trip, id) =>
     db.ref('/trips/'+id).set(trip);
+
+export const deleteTripTemplate = (id) =>
+    db.ref('/trips/' + id);
   
 export const getTripById = (id) =>
     db.ref('/trips/' + id).once('value');

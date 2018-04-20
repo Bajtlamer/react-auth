@@ -21,6 +21,11 @@ class DeleteModalBox extends React.Component {
     });
   }
 
+  onDelete = () => {
+    this.props.onDelete();
+    this.toggle();
+  }
+
   render() {
       const { onDelete, trasa } = this.props;
       const style = { cursor: 'hand', color: 'red' };
@@ -34,7 +39,7 @@ class DeleteModalBox extends React.Component {
             Opravdu si přejete smazat vybranou trasu "{trasa}" ?
           </ModalBody>
           <ModalFooter>
-            <Button size="sm" color="primary" onClick={onDelete}>Smazat</Button>{' '}
+            <Button size="sm" color="primary" onClick={this.onDelete}>Smazat</Button>{' '}
             <Button size="sm" color="secondary" onClick={this.toggle}>Storno</Button>
           </ModalFooter>
         </Modal>

@@ -100,9 +100,9 @@ class Dashboard extends React.Component {
 			var totalDiets = 0;
 
 			snap.forEach((trip) => {
-				totalBruto += Number(trip.val().prijem_ridic_bruto);
-				totalHandling += Number(trip.val().handling_kc);
-				totalDiets += Number(trip.val().diety_euro);
+				totalBruto += parseInt(trip.val().prijem_ridic_bruto);
+				totalHandling += parseInt(trip.val().handling_kc);
+				totalDiets += parseInt(trip.val().diety_euro);
 
 				userTrips.push(trip);
 				// console.log(trip.key);
