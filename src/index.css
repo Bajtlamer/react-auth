@@ -23,9 +23,6 @@ body {
   border-radius: 0;
 }
 
-.Select div {
-  /* height: 32px; */
-}
 .navbar {
   border-top: 2px solid red;
   border-bottom: 1px solid #cdcd;
@@ -44,3 +41,6 @@ body {
   border-bottom: 1px solid #dee2e6;
 }
 
+.help-block {
+  color: red;
+}

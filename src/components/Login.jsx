@@ -56,14 +56,14 @@ class Login extends Component {
 			
 			this.login(username, password);
 		} else {
-			alert('Neco se posralo');
+			this.setState({error: 'Uživatelské jméno  a heslo nesmí být prázdné!'});
 		}
 	}
 
 	login = (username, password) => {
 		this.setState({ logging: true });
 		
-		console.log('prihlasuji');
+		// console.log('prihlasuji');
 		
 		auth.doSignInWithEmailAndPassword(username, password)
       	.then((user) => {
@@ -81,7 +81,7 @@ class Login extends Component {
       		// console.log(error);
       		this.setState({ 
       			// user: null,
-				error: error.message, 
+				error: 'Chybné uživatelské jméno, nebo heslo.', 
 				logging: false
 	      	});
 		})

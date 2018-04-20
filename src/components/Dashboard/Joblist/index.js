@@ -8,7 +8,7 @@ const Tbody = (props) => {
 	const data = props.data;
 	const style = { cursor: 'hand', color: 'red' };
 
-	
+
 	const BodyRow = (props) => {
 		const { row, index, onDelete } = props;
 		return (
@@ -17,10 +17,10 @@ const Tbody = (props) => {
 				<td className="central">{row.linka}</td>
 				<td>{row.trasa}</td>
 				<td className="central">{row.diety_euro}</td>
-				<td className="central">{row.handlink_kc}</td>
+				<td className="central">{row.handling_kc}</td>
 				<td className="central">{row.prijem_ridic_bruto}</td>
 				<td className="central">
-					<DeleteModalBox onDelete={onDelete} trasa={row.trasa}/>
+					<DeleteModalBox onDelete={onDelete} trasa={row.trasa} />
 				</td>
 			</tr>
 		);
@@ -32,8 +32,8 @@ const Tbody = (props) => {
 
 }
 
-function formatNumber (num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+function formatNumber(num) {
+	return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
 }
 
 const Summary = (props) => {

@@ -15,6 +15,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-transition-group": "^15.6.2",
     "react-bootstrap": "^0.32.1",
+    "react-bootstrap-table-next": "^0.1.8",
     "react-csv": "^1.0.14",
     "react-dom": "^16.3.2",
     "react-icons": "^2.2.7",
