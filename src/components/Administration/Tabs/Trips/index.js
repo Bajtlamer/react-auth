@@ -39,7 +39,7 @@ export default class Table extends React.Component {
     }
 
     getTrips = () => {
-        db.getTrips().then((snap) => {
+        db.getTrips().on('value', snap => {
             let trips = [];
 
             snap.forEach((trip) => {

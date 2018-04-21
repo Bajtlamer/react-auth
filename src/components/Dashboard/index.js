@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
 	}
 
 	getTrips = () => {
-		db.getTrips().then((snap) => {
+		db.getTrips().on('value', snap => {
 			let trips = [];
 			let i = 0;
 

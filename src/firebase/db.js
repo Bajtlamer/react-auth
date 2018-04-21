@@ -15,7 +15,7 @@ export const onceGetUsers = () =>
     db.ref('users').once('value');
 
 export const getTrips = () =>
-    db.ref('/trips/').orderByChild('trasa').once('value');
+    db.ref('/trips/').orderByChild('trasa');
 
 export const addTrip = (trip, id) =>
     db.ref('/trips/'+id).set(trip);
