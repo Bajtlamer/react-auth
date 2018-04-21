@@ -9,8 +9,7 @@ import {
   NavLink,
   UncontrolledDropdown,
   DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  DropdownMenu
 } from 'reactstrap';
 import { firebase } from '../firebase';
 import { Redirect } from 'react-router';
@@ -29,16 +28,10 @@ const Logination = (props) => {
             {currentUser.email}
           </DropdownToggle>) : (<div className="spinner"><Loader scale={0.40} /></div>)}
         <DropdownMenu >
-          <DropdownItem>
-            <NavLink href="/account/">Uživatelský účet</NavLink>
-          </DropdownItem>
-          <DropdownItem>
-            <NavLink href="/admin/">Administrace</NavLink>
-          </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>
-            <NavLink onClick={doLogout}>Odhlásit</NavLink>
-          </DropdownItem>
+            <a className="dropdown-item" href="/account/">Uživatelský účet</a>
+            <a className="dropdown-item" href="/admin">Administrace</a>
+            <div className="dropdown-divider"></div>
+            <a className="dropdown-item" onClick={doLogout}>Odhlásit</a>
         </DropdownMenu>
       </UncontrolledDropdown>
     )

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Alert, Popover, PopoverBody, PopoverHeader } from 'reactstrap';
-import Delete from 'react-icons/lib/ti/delete';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Alert, Popover, PopoverBody } from 'reactstrap';
 import ReactTooltip from 'react-tooltip';
 import { FaPlus } from 'react-icons/lib/fa';
 import { db } from '../../../../../firebase';
@@ -33,20 +32,20 @@ class NewModalBox extends React.Component {
 
   checkFields = () => {
     var f = ['linka', 'handling_kc', 'diety_euro', 'prijem_ridic_bruto', 'trasa'];
-    var status = false;
+    
     f.map(item => {
       if (!this.state[item] || this.state[item] === 'undefined') {
-        // console.log(this.state[item]);
         this.PopoverAlert(item);
         return false;
-      }
+      }else{return null}
     });
   }
 
   togglePopover() {
-    // this.setState({
-    //   popoverOpen: !this.state.popoverOpen
-    // });
+    this.setState({
+      popoverAlert: !this.state.popoverOpen, 
+      popoverOpen: !this.state.popoverOpen
+    });
   }
 
   toggle() {
@@ -75,7 +74,7 @@ class NewModalBox extends React.Component {
       if (!this.state[item] || this.state[item] === 'undefined') {
         this.PopoverAlert(item);
         return true;
-      }
+      }else{return null}
     });
 
     var trip = {
@@ -97,8 +96,6 @@ class NewModalBox extends React.Component {
   }
 
   render() {
-    const { onSaveclick } = this.props;
-    const style = { cursor: 'hand', color: 'red' };
     return (
       <div>
         <Button className="float-right" color="danger" onClick={this.toggle}><FaPlus />&nbsp;Nová</Button>
@@ -109,38 +106,38 @@ class NewModalBox extends React.Component {
             <FormGroup>
               <Label for="linka">Linka</Label>
               <Input type="text" name="linka" id="linka" placeholder="" onChange={this.handleChange} />
+            </FormGroup>
               {this.state.submitted && !this.state.linka &&
                 this.state.popoverAlert
               }
-            </FormGroup>
             <FormGroup>
               <Label for="handling_kc">Handling Kč</Label>
               <Input type="text" name="handling_kc" id="handling_kc" placeholder="0.00" onChange={this.handleChange} />
+            </FormGroup>
               {this.state.submitted && !this.state.handling_kc &&
                 this.state.popoverAlert
               }
-            </FormGroup>
             <FormGroup>
               <Label for="diety_euro">Diety Eur</Label>
               <Input type="text" name="diety_euro" id="diety_euro" placeholder="0.00" onChange={this.handleChange} />
+            </FormGroup>
               {this.state.submitted && !this.state.diety_euro &&
                 this.state.popoverAlert
               }
-            </FormGroup>
             <FormGroup>
               <Label for="prijem_ridic_bruto">Příjem řidič BRUTO</Label>
               <Input type="text" name="prijem_ridic_bruto" id="prijem_ridic_bruto" placeholder="0.00" onChange={this.handleChange} />
+            </FormGroup>
               {this.state.submitted && !this.state.prijem_ridic_bruto &&
                 this.state.popoverAlert
               }
-            </FormGroup>
             <FormGroup>
               <Label for="trasa">Trasa</Label>
               <Input type="textarea" name="trasa" id="trasa" placeholder="Trasa z do..." onChange={this.handleChange} />
+            </FormGroup>
               {this.state.submitted && !this.state.trasa &&
                 this.state.popoverAlert
               }
-            </FormGroup>
           </ModalBody>
           <ModalFooter>
             <Button size="sm" color="primary" onClick={() => this.handleSubmit(this)}>Uložit</Button>{' '}

@@ -4,9 +4,9 @@ import Navigation from '../Navbar';
 import Joblist from './Joblist';
 import { checkAuth } from '../../services/fireAuth';
 import { db } from '../../firebase';
-import { Container, Button, Row, Col, Alert } from "reactstrap";
+import { Container, Button, Row, Col } from "reactstrap";
 import MonthBox from "../monthbox";
-import { CSVLink, CSVDownload } from 'react-csv';
+import { CSVLink } from 'react-csv';
 import { FaCloudDownload } from 'react-icons/lib/fa';
 import 'react-select/dist/react-select.css';
 import './dashboard.css'
@@ -17,8 +17,10 @@ const DownlodAsCsv = (props) => {
 	const { data, year, month, user } = props;
 	const filename = user.email.split('@')[0] + '-' + month + '-' + year + ".csv";
 	let arr = [];
-	const array = data.map((row) => {
+	
+	data.map((row) => {
 		arr.push(row.val())
+		return true;
 	});
 
 	return <CSVLink data={arr} separator={";"} className="dlink" filename={filename}><FaCloudDownload size={24} />&nbsp;Uložit do souboru CSV</CSVLink>;
@@ -52,13 +54,10 @@ class Dashboard extends React.Component {
 	getTrips = () => {
 		db.getTrips().on('value', snap => {
 			let trips = [];
-			let i = 0;
 
 			snap.forEach((trip) => {
 				let value = { label: trip.val().trasa, value: trip.key };
 				trips.push(value);
-				i++;
-				// console.log(trip.key);
 			});
 			this.setState({ trips });
 		});
@@ -100,9 +99,9 @@ class Dashboard extends React.Component {
 			var totalDiets = 0;
 
 			snap.forEach((trip) => {
-				totalBruto += parseInt(trip.val().prijem_ridic_bruto);
-				totalHandling += parseInt(trip.val().handling_kc);
-				totalDiets += parseInt(trip.val().diety_euro);
+				totalBruto += Number(trip.val().prijem_ridic_bruto);
+				totalHandling += Number(trip.val().handling_kc);
+				totalDiets += Number(trip.val().diety_euro);
 
 				userTrips.push(trip);
 				// console.log(trip.key);

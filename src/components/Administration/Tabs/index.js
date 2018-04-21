@@ -5,10 +5,6 @@ import TripsComponent from './Trips';
 
 import NewModalBox from './Trips/NewModalBox';
 
-const NewForm = () => {
-	return <NewModalBox />
-}
-
 export default class AdminTabs extends React.Component {
 	constructor(props) {
 		super(props);
@@ -26,11 +22,6 @@ export default class AdminTabs extends React.Component {
 			});
 		}
 	}
-
-	onSaveclick = () => {
-		alert('ddd');
-	}
-
 
 	render() {
 		return (

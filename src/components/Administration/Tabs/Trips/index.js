@@ -2,14 +2,9 @@ import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { db } from '../../../../firebase';
 import Loader from 'react-loader';
-import Delete from 'react-icons/lib/ti/delete';
-import FaTrashO from 'react-icons/lib/fa';
 import DeleteModalBox from '../../../Dashboard/Joblist/delete-modal-box';
 
-const xxx = ()=><FaTrashO />
-
 const DeleteButton = ( cell, row, rowIndex, formatExtraData ) => {
-    const style = { cursor: 'hand', color: 'red' };
     return (
         <DeleteModalBox onDelete={()=>formatExtraData.onDelete(row.key)} trasa={row.trasa} />
     );
@@ -17,10 +12,6 @@ const DeleteButton = ( cell, row, rowIndex, formatExtraData ) => {
 
 export default class Table extends React.Component {
 
-    constructor(props){
-        super(props);
-
-    }
     state = {
         trips: null
     }

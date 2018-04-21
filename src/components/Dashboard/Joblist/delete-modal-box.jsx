@@ -27,11 +27,10 @@ class DeleteModalBox extends React.Component {
   }
 
   render() {
-      const { onDelete, trasa } = this.props;
+      const { trasa } = this.props;
       const style = { cursor: 'hand', color: 'red' };
     return (
       <div>
-        {/* <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button> */}
         <Delete size={26} style={style} onClick={this.toggle} data-tip="Smazat záznam" data-for='delete'/>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Mazání záznamu</ModalHeader>
