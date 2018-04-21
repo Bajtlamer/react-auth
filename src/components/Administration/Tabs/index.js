@@ -50,7 +50,7 @@ export default class AdminTabs extends React.Component {
 							<Col sm="12">
 								<Row>
 									<Col sm="11">
-										<h4>Seznam tras</h4>
+										<h4>SEZNAM TRAS</h4>
 									</Col>
 									<Col sm="1">
 										<NewModalBox onSaveclick={this.onSaveclick} />

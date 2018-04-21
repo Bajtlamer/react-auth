@@ -44,3 +44,7 @@ body {
 .help-block {
   color: red;
 }
+
+.pagination {
+  float: right;
+}
