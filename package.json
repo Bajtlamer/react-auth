@@ -11,6 +11,7 @@
     "material-ui": "^0.20.0",
     "mobx": "^4.2.0",
     "mobx-react": "^5.0.0",
+    "npm": "^5.8.0",
     "react": "^16.3.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-transition-group": "^15.6.2",
@@ -26,7 +27,9 @@
     "react-select": "^1.2.1",
     "react-tooltip": "^3.5.0",
     "reactstrap": "^5.0.0",
-    "recompose": "^0.26.0"
+    "recompose": "^0.26.0",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
   },
   "scripts": {
     "start": "react-scripts start",

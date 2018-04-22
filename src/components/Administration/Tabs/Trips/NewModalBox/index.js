@@ -8,6 +8,7 @@ import { db } from '../../../../../firebase';
 class NewModalBox extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       submitted: false,
       modal: false,
@@ -18,13 +19,13 @@ class NewModalBox extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.togglePopover = this.togglePopover.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  PopoverAlert = (target) => {
-    var msg = "Pole '" + target + "' nesmí být prázdné."
+  PopoverAlert = (target, message) => {
+    var msg = (!message) ? "Pole nesmí být prázdné." : message;
     const popoverAlert = <Popover placement="bottom" isOpen={true} target={target} toggle={this.togglePopover}><PopoverBody>{msg}</PopoverBody></Popover>
-
+    console.log('vytvarim alert pro '+target);
     this.setState({
       popoverAlert
     });
@@ -56,25 +57,51 @@ class NewModalBox extends React.Component {
 
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value, submitted: false, error: null });
+    // this.setState({ [name]: value, submitted: false, error: null });
+    this.setState({ [name]: value });
     this.togglePopover()
   }
 
-  ulozit = (trip, id) => {
+  resetFormState = () => {
+    this.setState({
+      diety_euro: null,
+      handling_kc: null,
+      linka: null,
+      trasa: null,
+      prijem_ridic_bruto: null
+
+    });
+  }
+
+  ulozit(trip, id) {
     // console.log('Ukladam...');
     db.addTrip(trip, id);
+    
     this.toggle();
   }
 
   handleSubmit(e) {
+    // console.log(e);
+    // e.preventDefault();
     this.setState({ submitted: true });
     var f = ['trasa', 'prijem_ridic_bruto', 'diety_euro', 'handling_kc', 'linka'];
+    var c = ['prijem_ridic_bruto', 'diety_euro', 'handling_kc'];
 
-    var result = f.map((item, ulozit) => {
+    var result = f.map((item) => {
       if (!this.state[item] || this.state[item] === 'undefined') {
         this.PopoverAlert(item);
         return true;
-      }else{return null}
+      }else{
+        if (c.find(n => {return n === item})) {
+          if(isNaN(Number(this.state[item]))){
+              this.PopoverAlert(item, 'Je vyžadováno číslo!');
+              return true;
+            }
+          }else{
+            return null
+          }
+    
+      }
     });
 
     var trip = {
@@ -90,6 +117,8 @@ class NewModalBox extends React.Component {
       // console.log('Nemuzu...');
     } else {
       this.ulozit(trip, id);
+      this.resetFormState();
+      // return true;
     }
 
     // db.addTrip(trip, id);
@@ -99,48 +128,48 @@ class NewModalBox extends React.Component {
     return (
       <div>
         <Button className="float-right" color="danger" onClick={this.toggle}><FaPlus />&nbsp;Nová</Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} fade={false} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Nová trasa</ModalHeader>
           <ModalBody>
             {this.state.error && <Alert color="danger">{this.state.error}</Alert>}
             <FormGroup>
               <Label for="linka">Linka</Label>
-              <Input type="text" name="linka" id="linka" placeholder="" onChange={this.handleChange} />
+              <Input type="text" name="linka" id="linka" placeholder="linka..." onChange={this.handleChange} />
             </FormGroup>
-              {this.state.submitted && !this.state.linka &&
+              {this.state.submitted && this.state.popoverAlert &&
                 this.state.popoverAlert
               }
             <FormGroup>
               <Label for="handling_kc">Handling Kč</Label>
               <Input type="text" name="handling_kc" id="handling_kc" placeholder="0.00" onChange={this.handleChange} />
             </FormGroup>
-              {this.state.submitted && !this.state.handling_kc &&
+              {this.state.submitted && this.state.popoverAlert &&
                 this.state.popoverAlert
               }
             <FormGroup>
               <Label for="diety_euro">Diety Eur</Label>
               <Input type="text" name="diety_euro" id="diety_euro" placeholder="0.00" onChange={this.handleChange} />
             </FormGroup>
-              {this.state.submitted && !this.state.diety_euro &&
+              {this.state.submitted && this.state.popoverAlert &&
                 this.state.popoverAlert
               }
             <FormGroup>
               <Label for="prijem_ridic_bruto">Příjem řidič BRUTO</Label>
               <Input type="text" name="prijem_ridic_bruto" id="prijem_ridic_bruto" placeholder="0.00" onChange={this.handleChange} />
             </FormGroup>
-              {this.state.submitted && !this.state.prijem_ridic_bruto &&
+              {this.state.submitted && this.state.popoverAlert &&
                 this.state.popoverAlert
               }
             <FormGroup>
               <Label for="trasa">Trasa</Label>
               <Input type="textarea" name="trasa" id="trasa" placeholder="Trasa z do..." onChange={this.handleChange} />
             </FormGroup>
-              {this.state.submitted && !this.state.trasa &&
+              {this.state.submitted && this.state.popoverAlert &&
                 this.state.popoverAlert
               }
           </ModalBody>
           <ModalFooter>
-            <Button size="sm" color="primary" onClick={() => this.handleSubmit(this)}>Uložit</Button>{' '}
+            <Button size="sm" color="primary" onClick={()=>this.handleSubmit(this)}>Uložit</Button>{' '}
             <Button size="sm" color="secondary" onClick={this.toggle}>Zavřít</Button>
           </ModalFooter>
         </Modal>
