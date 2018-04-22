@@ -4,10 +4,18 @@ import { db } from '../../../../firebase';
 import Loader from 'react-loader';
 import DeleteModalBox from '../../../Dashboard/Joblist/delete-modal-box';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import NewModalBox from './NewModalBox';
 
 const DeleteButton = (cell, row, rowIndex, formatExtraData) => {
     return (
         <DeleteModalBox onDelete={() => formatExtraData.onDelete(row.key)} trasa={row.trasa} />
+    );
+}
+
+const EditButton = (cell, row, rowIndex, formatExtraData) => {
+    // console.log(row);
+    return (
+        <NewModalBox onUpdate={formatExtraData.onUpdate} trip={row} mode={1}/>
     );
 }
 
@@ -25,6 +33,11 @@ export default class Table extends React.Component {
         });
     }
 
+    onUpdateButtonClick = (trip, id) => {
+        db.updateTrip(trip, id);
+        // console.log(id);
+        // console.log(trip);
+    }
 
     componentDidMount() {
         this.getTrips();
@@ -48,6 +61,7 @@ export default class Table extends React.Component {
 
     render() {
         const onDelete = this.onDeleteButtonClick;
+        const onUpdate = this.onUpdateButtonClick;
         const columns = [{
             dataField: 'linka',
             text: 'Linka',
@@ -71,6 +85,17 @@ export default class Table extends React.Component {
             text: 'Příjem BRUTO',
             align: 'center',
             headerAlign: 'center',
+        }, {
+            dataField: 'upravit',
+            text: 'upravit',
+            headerAlign: 'center',
+            formatter: EditButton,
+            formatExtraData: {
+                onUpdate
+            },
+            style: {
+                "textAlign": 'center'
+            },
         }, {
             dataField: 'smazat',
             text: 'X',

@@ -20,6 +20,9 @@ export const getTrips = () =>
 export const addTrip = (trip, id) =>
     db.ref('/trips/'+id).set(trip);
 
+export const updateTrip = (trip, id) =>
+    db.ref('/trips/'+id).set(trip);
+
 export const deleteTripTemplate = (id) =>
     db.ref('/trips/' + id);
   

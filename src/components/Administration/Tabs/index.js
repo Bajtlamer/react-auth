@@ -53,7 +53,7 @@ export default class AdminTabs extends React.Component {
 										<h4>SEZNAM TRAS</h4>
 									</Col>
 									<Col sm="1">
-										<NewModalBox />
+										<NewModalBox mode={0}/>
 										{/* <Button className="float-right" color="danger" onClick={()=>this.NewForm}><FaPlus />&nbsp;Nová</Button> */}
 									</Col>
 								</Row>
