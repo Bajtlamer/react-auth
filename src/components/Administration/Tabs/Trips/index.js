@@ -4,23 +4,24 @@ import { db } from '../../../../firebase';
 import Loader from 'react-loader';
 import DeleteModalBox from '../../../Dashboard/Joblist/delete-modal-box';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import NewModalBox from './NewModalBox';
+import EditModalBox from './NewModalBox';
 
 const DeleteButton = (cell, row, rowIndex, formatExtraData) => {
+    // const { key, trasa } = row;
+    // console.log(row);
     return (
+        (typeof row !== 'undefined') && 
         <DeleteModalBox onDelete={() => formatExtraData.onDelete(row.key)} trasa={row.trasa} />
     );
 }
 
 const EditButton = (cell, row, rowIndex, formatExtraData) => {
-    // console.log(row);
     return (
-        <NewModalBox onUpdate={formatExtraData.onUpdate} trip={row} mode={1}/>
+        <EditModalBox onUpdate={formatExtraData.onUpdate} trip={row} mode={1}/>
     );
 }
 
 export default class Table extends React.Component {
-
     state = {
         trips: null
     }
@@ -29,8 +30,12 @@ export default class Table extends React.Component {
         db.deleteTripTemplate(id).remove(err => {
             if (err) {
                 console.log(err);
+            }else{
+                console.log('Success...');
+                this.setState({test:1});
             }
         });
+        return true;
     }
 
     onUpdateButtonClick = (trip, id) => {
@@ -87,7 +92,7 @@ export default class Table extends React.Component {
             headerAlign: 'center',
         }, {
             dataField: 'upravit',
-            text: 'upravit',
+            text: '-',
             headerAlign: 'center',
             formatter: EditButton,
             formatExtraData: {
@@ -98,7 +103,7 @@ export default class Table extends React.Component {
             },
         }, {
             dataField: 'smazat',
-            text: 'X',
+            text: '-',
             headerAlign: 'center',
             formatter: DeleteButton,
             formatExtraData: {
@@ -111,22 +116,8 @@ export default class Table extends React.Component {
         }];
 
         const options = {
-            paginationSize: 5,
-            pageStartIndex: 1,
-            // alwaysShowAllBtns: true,
-            // withFirstAndLast: false,
-            hideSizePerPage: true,
-            hidePageListOnlyOnePage: true,
-            firstPageText: 'První',
-            prePageText: 'Předchozí',
-            nextPageText: 'Další',
-            lastPageText: 'Poslední',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
             sizePerPageList: [{
-                text: '10', value: 10
+                text: '15', value: 15
             }]
         };
 
@@ -136,7 +127,8 @@ export default class Table extends React.Component {
                     keyField='key'
                     data={this.state.trips}
                     columns={columns}
-                    pagination={paginationFactory(options)} />
+                    pagination={paginationFactory(options)} 
+                    />
             ) : (
                     <Loader scale={0.50} />
                 )

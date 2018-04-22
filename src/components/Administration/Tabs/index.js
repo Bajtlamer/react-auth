@@ -54,7 +54,6 @@ export default class AdminTabs extends React.Component {
 									</Col>
 									<Col sm="1">
 										<NewModalBox mode={0}/>
-										{/* <Button className="float-right" color="danger" onClick={()=>this.NewForm}><FaPlus />&nbsp;Nová</Button> */}
 									</Col>
 								</Row>
 								<p />

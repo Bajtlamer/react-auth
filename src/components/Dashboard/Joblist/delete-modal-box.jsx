@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Delete from 'react-icons/lib/ti/delete';
+import { FaTimesCircle as Delete} from 'react-icons/lib/fa';
 import ReactTooltip from 'react-tooltip';
 
 // import ModalBox from 'modalbox';
@@ -31,7 +31,7 @@ class DeleteModalBox extends React.Component {
       const style = { cursor: 'hand', color: 'red' };
     return (
       <div>
-        <Delete size={26} style={style} onClick={this.toggle} data-tip="Smazat záznam" data-for='delete'/>
+        <Delete size={20} style={style} onClick={this.toggle} data-tip="Smazat záznam" data-for='delete'/>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Mazání záznamu</ModalHeader>
           <ModalBody>
