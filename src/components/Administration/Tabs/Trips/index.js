@@ -32,7 +32,7 @@ export default class Table extends React.Component {
                 console.log(err);
             }else{
                 console.log('Success...');
-                this.setState({test:1});
+                this.getTrips();
             }
         });
         return true;
