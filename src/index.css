@@ -24,7 +24,7 @@ body {
 }
 
 .navbar {
-  border-top: 2px solid red;
+  border-top: 2px solid #73d700;
   border-bottom: 1px solid #cdcd;
   padding: 0;
 }

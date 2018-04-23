@@ -11,14 +11,14 @@ import {
   DropdownToggle,
   DropdownMenu
 } from 'reactstrap';
-import { firebase } from '../firebase';
+import { firebase, db } from '../firebase';
 import { Redirect } from 'react-router';
 import Loader from 'react-loader';
 import './navbar.css'
 
 
 const Logination = (props) => {
-  const { isLogged, doLogout, currentUser } = props;
+  const { isLogged, doLogout, currentUser, isAdmin } = props;
 
   if (isLogged === true) {
     return (
@@ -28,10 +28,10 @@ const Logination = (props) => {
             {currentUser.email}
           </DropdownToggle>) : (<div className="spinner"><Loader scale={0.40} /></div>)}
         <DropdownMenu >
-            <a className="dropdown-item" href="/account/">Uživatelský účet</a>
-            <a className="dropdown-item" href="/admin">Administrace</a>
-            <div className="dropdown-divider"></div>
-            <a className="dropdown-item" onClick={doLogout}>Odhlásit</a>
+          <a className="dropdown-item" href="/account/">Uživatelský účet</a>
+          {isAdmin ?<a className="dropdown-item" href="/admin" >Administrace</a>:''}
+          <div className="dropdown-divider"></div>
+          <a className="dropdown-item" onClick={doLogout}>Odhlásit</a>
         </DropdownMenu>
       </UncontrolledDropdown>
     )
@@ -49,18 +49,24 @@ class Navigation extends React.Component {
     this.state = {
       isOpen: false,
       isLogged: this.props.isLogged,
-      user: null
+      user: null,
+      isAdmin: false
     };
   }
 
+  componentDidMount() {
+    const userid = this.getCurrentUserFromStore().uid;
+    this.getUserIsAdministrator(userid);
+  }
+
   getCurrentUserFromStore = () => {
-    return JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user;
   }
 
   logout = () => {
     let that = this;
     firebase.auth.signOut().then(function (resp) {
-      // console.log('Sign-out successful.');
       localStorage.setItem('user', null);
       that.setState({
         isLogged: false,
@@ -71,6 +77,14 @@ class Navigation extends React.Component {
     });
   }
 
+  getUserIsAdministrator = (id) => {
+      db.getUserIsAdmin(id).then(snap => {
+        let isAdmin = snap.val().isAdmin;
+        this.setState({isAdmin})
+      }).catch(err => {
+        console.log(err);
+      });
+  }
 
   toggle() {
     this.setState({
@@ -80,6 +94,9 @@ class Navigation extends React.Component {
 
   render() {
     const { children } = this.props;
+    const user = this.getCurrentUserFromStore();
+    // const isAdmin = this.getUserIsAdministrator(user.uid);
+    // console.log(this.state.isAdmin);
 
     return (
       this.state.isLogged ? (
@@ -90,7 +107,7 @@ class Navigation extends React.Component {
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
-                  <Logination isLogged={this.state.isLogged} doLogout={this.logout} currentUser={this.getCurrentUserFromStore()} />
+                  <Logination isLogged={this.state.isLogged} doLogout={this.logout} isAdmin={this.state.isAdmin} currentUser={user} />
                 </Nav>
               </Collapse>
             </Container>

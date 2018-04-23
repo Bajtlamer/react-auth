@@ -1,9 +1,19 @@
 import React from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, Alert } from 'reactstrap';
 import classnames from 'classnames';
 import TripsComponent from './Trips';
-
+import UserList from './Users';
+import Loader from 'react-loader';
 import NewModalBox from './Trips/NewModalBox';
+import { isAdministrator } from '../../../services/fireAuth';
+
+const NoTrustArea = () => {
+	return (
+		<TabContent tabs>
+			<Alert color="danger">Nemáte oprávnění!</Alert>
+		</TabContent>
+	)
+}
 
 export default class AdminTabs extends React.Component {
 	constructor(props) {
@@ -11,8 +21,15 @@ export default class AdminTabs extends React.Component {
 
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			activeTab: '1'
+			activeTab: '1',
+			isAdmin: null
 		};
+	}
+
+	componentDidMount() {
+		isAdministrator().then(isAdmin => {
+			this.setState({ isAdmin });
+		})
 	}
 
 	toggle(tab) {
@@ -24,63 +41,71 @@ export default class AdminTabs extends React.Component {
 	}
 
 	render() {
-		return (
-			<div className="tabs">
-				<Nav tabs>
-					<NavItem>
-						<NavLink
-							className={classnames({ active: this.state.activeTab === '1' })}
-							onClick={() => { this.toggle('1'); }}
-						>
-							Definice tras
-            </NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink
-							className={classnames({ active: this.state.activeTab === '2' })}
-							onClick={() => { this.toggle('2'); }}
-						>
-							Uživatelé
-            </NavLink>
-					</NavItem>
-				</Nav>
-				<TabContent activeTab={this.state.activeTab}>
-					<TabPane tabId="1">
-						<Row>
-							<Col sm="12">
+		if (this.state.isAdmin === null) {
+			return <Loader />
+		} else {
+			return (
+				this.state.isAdmin === true ?
+					<div className="tabs">
+						<Nav tabs>
+							<NavItem>
+								<NavLink
+									className={classnames({ active: this.state.activeTab === '1' })}
+									onClick={() => { this.toggle('1'); }}
+								>
+									Definice tras
+            					</NavLink>
+							</NavItem>
+							<NavItem>
+								<NavLink
+									className={classnames({ active: this.state.activeTab === '2' })}
+									onClick={() => { this.toggle('2'); }}
+								>
+									Uživatelé
+            					</NavLink>
+							</NavItem>
+						</Nav>
+						<TabContent activeTab={this.state.activeTab}>
+							<TabPane tabId="1">
 								<Row>
-									<Col sm="11">
-										<h4>SEZNAM TRAS</h4>
-									</Col>
-									<Col sm="1">
-										<NewModalBox mode={0}/>
+									<Col sm="12">
+										<Row>
+											<Col sm="11">
+												<h4>SEZNAM TRAS</h4>
+											</Col>
+											<Col sm="1">
+												<NewModalBox mode={0} />
+											</Col>
+										</Row>
+										<p />
+										<TripsComponent />
 									</Col>
 								</Row>
-								<p />
-								<TripsComponent />
-							</Col>
-						</Row>
-					</TabPane>
-					<TabPane tabId="2">
-						<Row>
-							<Col sm="6">
-								<Card body>
-									<CardTitle>Special Title Treatment</CardTitle>
-									<CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-									<Button>Go somewhere</Button>
-								</Card>
-							</Col>
-							<Col sm="6">
-								<Card body>
-									<CardTitle>Special Title Treatment</CardTitle>
-									<CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-									<Button>Go somewhere</Button>
-								</Card>
-							</Col>
-						</Row>
-					</TabPane>
-				</TabContent>
-			</div>
-		);
+							</TabPane>
+							<TabPane tabId="2">
+								<Row>
+									<Col sm="6">
+										<Card body>
+											<CardTitle>Seznam uživatelů</CardTitle>
+											<UserList />
+											<p />
+											{/* <Button>Go somewhere</Button> */}
+										</Card>
+									</Col>
+									<Col sm="6">
+										<Card body>
+											<CardTitle>Special Title Treatment</CardTitle>
+											<CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+											<Button>Go somewhere</Button>
+										</Card>
+									</Col>
+								</Row>
+							</TabPane>
+						</TabContent>
+					</div>
+					:
+					<NoTrustArea />
+			);
+		}
 	}
 }

@@ -17,7 +17,8 @@ import {
 	Alert
 } from "reactstrap";
 import "./Login.css";
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+
 
 class Login extends Component {
 	constructor(props) {
@@ -63,24 +64,26 @@ class Login extends Component {
 	login = (username, password) => {
 		this.setState({ logging: true });
 		
-		// console.log('prihlasuji');
-		
 		auth.doSignInWithEmailAndPassword(username, password)
       	.then((user) => {
-      		// console.log(user);
-	        
-	        localStorage.setItem('user', JSON.stringify(user));
+				let _usr = user.providerData[0];
+				let _uid = user.uid;
+	        db.updateUser(_usr, _uid).then(err => {
+				if (err) {
+					console.log(err);
+				}else{
+					console.log('User has successfuly updated...');
+				}
+			});
+
+			localStorage.setItem('user', JSON.stringify(user));
+			
 	        this.setState({
 	        	redirectToReferrer: true, 
-	        	// user: user,
 	        	logging: false 
 	        });
-	        // history.push(routes.HOME);
-      	})
-      	.catch(error => {
-      		// console.log(error);
+      	}).catch(error => {
       		this.setState({ 
-      			// user: null,
 				error: 'Chybné uživatelské jméno, nebo heslo.', 
 				logging: false
 	      	});
@@ -128,7 +131,7 @@ class Login extends Component {
 				{/* <Navigation /> */}
 				<Container>
 					<Row>
-						<div className="col-4 offset-4">
+						<div className="col-md-4 col-sm-12 offset-sm-4">
 							<Card>
 								<CardHeader>Přihlášení do systému FlixBUS</CardHeader>
 								<CardBody>

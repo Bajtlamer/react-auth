@@ -14,6 +14,18 @@ export const addTripToUser = (userId, month, year, trip) =>
 export const onceGetUsers = () =>
     db.ref('users').once('value');
 
+export const updateUser = (user, id) =>
+    db.ref('/users/'+id).update(user);
+
+export const getUsers = () =>
+    db.ref('/users/').orderByChild('email');
+
+export const updateUserIsAdmin = (userState, id) =>
+    db.ref('/users/'+id).update({isAdmin: !userState});
+
+export const getUserIsAdmin = (id) =>
+    db.ref('/users/'+id).once('value');
+
 export const getTrips = () =>
     db.ref('/trips/').orderByChild('trasa');
 
@@ -32,7 +44,7 @@ export const getTripById = (id) =>
 export const removeDriversTrips = (driverId, month, year, key) =>
     db.ref('/userTrips/' + driverId + '/' + year + '/' + month + '/' + key);
 
-    export const getDriversTrips = (driverId, month, year) =>
+export const getDriversTrips = (driverId, month, year) =>
     db.ref('/userTrips/' + driverId + '/' + year + '/' + month + '/');
   
 // Other db APIs ...

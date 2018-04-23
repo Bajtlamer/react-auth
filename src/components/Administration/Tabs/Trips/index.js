@@ -1,14 +1,11 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { db } from '../../../../firebase';
-import Loader from 'react-loader';
 import DeleteModalBox from '../../../Dashboard/Joblist/delete-modal-box';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import EditModalBox from './NewModalBox';
 
 const DeleteButton = (cell, row, rowIndex, formatExtraData) => {
-    // const { key, trasa } = row;
-    // console.log(row);
     return (
         (typeof row !== 'undefined') && 
         <DeleteModalBox onDelete={() => formatExtraData.onDelete(row.key)} trasa={row.trasa} />
@@ -31,7 +28,7 @@ export default class Table extends React.Component {
             if (err) {
                 console.log(err);
             }else{
-                console.log('Success...');
+                // console.log('Success...');
                 this.getTrips();
             }
         });
@@ -40,8 +37,6 @@ export default class Table extends React.Component {
 
     onUpdateButtonClick = (trip, id) => {
         db.updateTrip(trip, id);
-        // console.log(id);
-        // console.log(trip);
     }
 
     componentDidMount() {
@@ -130,7 +125,7 @@ export default class Table extends React.Component {
                     pagination={paginationFactory(options)} 
                     />
             ) : (
-                    <Loader scale={0.50} />
+                    ''
                 )
             )
         )
