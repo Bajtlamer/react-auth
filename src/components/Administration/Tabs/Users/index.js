@@ -22,7 +22,7 @@ const SortableItem = (props) => {
 
     return (
     <li className="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-        {user.email}<span className="badge">
+        <span className="float-left">{user.email}</span><span className="badge">
         {user.isAdmin ?
         <FaToggleOn  size={size} style={style} onClick={()=>changeStatus(user.isAdmin, user.key)} data-tip={tooltip} data-for='isadmin' />:
         <FaToggleOff size={size} style={style} onClick={()=>changeStatus(user.isAdmin, user.key)} data-tip={tooltip} data-for='isadmin' />}

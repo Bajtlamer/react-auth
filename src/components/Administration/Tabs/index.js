@@ -94,9 +94,9 @@ export default class AdminTabs extends React.Component {
 									</Col>
 									<Col sm="6">
 										<Card body>
-											<CardTitle>Special Title Treatment</CardTitle>
-											<CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-											<Button>Go somewhere</Button>
+											<CardTitle>Uživatelský profil</CardTitle>
+											<CardText>Zde budou editovatelné informace o uživateli...</CardText>
+											<Button>Zobrazit více</Button>
 										</Card>
 									</Col>
 								</Row>

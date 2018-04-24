@@ -15,7 +15,7 @@ class Account extends Component {
 				<Navigation isLogged={isLogged}>
 					<Container>
 						<Row>
-							<div className="col-4 offset-4">
+							<div className="col-md-4 col-sm-12 offset-sm-4">
 								<Card>
 									<CardHeader>Uživatelský ůčet</CardHeader>
 									<CardBody>

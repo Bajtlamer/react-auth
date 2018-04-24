@@ -48,3 +48,10 @@ body {
 .pagination {
   float: right;
 }
+
+@media (max-width: 575.98px) {
+  .navbar-expand-sm>.container, .navbar-expand-sm>.container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
