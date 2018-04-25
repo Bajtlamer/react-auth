@@ -5,11 +5,12 @@ import Joblist from './Joblist';
 import JoblistMobile from './Joblist/Mobile';
 import { checkAuth } from '../../services/fireAuth';
 import { db } from '../../firebase';
-import { Container, Button, Row, Col } from "reactstrap";
+import { Container, Button, Row, Col, Jumbotron } from "reactstrap";
 import MonthBox from "../monthbox";
 import { CSVLink } from 'react-csv';
 import { FaCloudDownload } from 'react-icons/lib/fa';
-import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
+import { isMobile } from "react-device-detect";
+import Loader from 'react-loader';
 
 import 'react-select/dist/react-select.css';
 import './dashboard.css'
@@ -20,7 +21,7 @@ const DownlodAsCsv = (props) => {
 	const { data, year, month, user } = props;
 	const filename = user.email.split('@')[0] + '-' + month + '-' + year + ".csv";
 	let arr = [];
-	
+
 	data.map((row) => {
 		arr.push(row.val())
 		return true;
@@ -153,58 +154,58 @@ class Dashboard extends React.Component {
 		const value = selectedOption && selectedOption.value;
 
 		return (
-			<div>
-				<Navigation isLogged={checkAuth()} >
-					<Container className="dashboard">
+			<Navigation isLogged={checkAuth()} >
+				<Container>
 						<h1 className="display-4 text-center">Panel řidiče</h1>
-					</Container>
-					<Container>{this.state.error}</Container>
-					<Container>
-						<Row>
-							<div className="col-sm-12 col-md-6 mt-2">
-								{this.state.trips ?
-									(<Select
-										name="trip-list"
-										value={value}
-										onChange={this.handleChange}
-										options={this.state.trips}
-										placeholder="Vyberte trasu..." />
-									) : (
-										<p>Načítám...</p>
-									)}
-							</div>
-							<div className="col-md-2 col-sm-4 mt-2">
-								<MonthBox onChanged={() => this.onMonthChange} month={this.state.month} />
-							</div>
-							<div className="col mt-2">
-								<Button color="primary" onClick={this.onAddButtonPress} >Přidat</Button>
-							</div>
-						</Row>
-					</Container>
-					<Container>
-						
-						{isMobile ? <JoblistMobile data={this.state.userTrips} onDeleteClick={this.onDeleteButtonClick}/>:
-						<Joblist
-							data={this.state.userTrips}
-							totalBruto={this.state.totalBruto}
-							totalHandling={this.state.totalHandling}
-							totalDiets={this.state.totalDiets}
-							onDeleteClick={this.onDeleteButtonClick}
-						/>}
-						
-					</Container>
-
-					<Container>
+						<p />
+						<Container>{this.state.error}</Container>
 						{this.state.userTrips ?
-							<DownlodAsCsv
-								data={this.state.userTrips}
-								year={this.state.year}
-								month={this.state.month}
-								user={this.state.user}
-							/> : ''}
-					</Container>
-				</Navigation>
-			</div>
+							<Container>
+								<Row>
+									<div className="col-sm-12 col-md-6 mt-2">
+										{this.state.trips ?
+											(<Select
+												name="trip-list"
+												value={value}
+												onChange={this.handleChange}
+												options={this.state.trips}
+												placeholder="Vyberte trasu..." />
+											) : (
+												<p>Načítám...</p>
+											)}
+									</div>
+									<div className="col-md-2 col-sm-4 mt-2">
+										<MonthBox onChanged={() => this.onMonthChange} month={this.state.month} />
+									</div>
+									<div className="col mt-2">
+										<Button color="primary" onClick={this.onAddButtonPress} >Přidat</Button>
+									</div>
+								</Row>
+							</Container>
+							:
+							<Loader />}
+						<Container>
+							{isMobile ? <JoblistMobile data={this.state.userTrips} onDeleteClick={this.onDeleteButtonClick} totalBruto={this.state.totalBruto} /> :
+								<Joblist
+									data={this.state.userTrips}
+									totalBruto={this.state.totalBruto}
+									totalHandling={this.state.totalHandling}
+									totalDiets={this.state.totalDiets}
+									onDeleteClick={this.onDeleteButtonClick}
+								/>
+							}
+						</Container>
+						<Container>
+							{this.state.userTrips ?
+								<DownlodAsCsv
+									data={this.state.userTrips}
+									year={this.state.year}
+									month={this.state.month}
+									user={this.state.user}
+								/> : ''}
+						</Container>
+				</Container>
+			</Navigation>
 		);
 	}
 }

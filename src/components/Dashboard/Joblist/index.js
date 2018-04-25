@@ -60,10 +60,11 @@ export default class Joblist extends React.Component {
 		const { data, totalBruto, totalHandling, totalDiets, onDeleteClick } = this.props;
 		// console.log(data);
 		return (
+				data ? (
 			<div>
-				<br />
-				<h3>Seznam přidělených tras</h3>
-				{data ? (
+				<p />
+				<h4>Seznam přidělených tras</h4>
+				<p />
 					<Table responsive>
 						<thead>
 							<tr>
@@ -82,10 +83,10 @@ export default class Joblist extends React.Component {
 							{/* <Subtotal subtotal={totalHandling+totalBruto}/> */}
 						</tbody>
 					</Table>
+					</div>
 				) : (
 						<Loader />
-					)}
-			</div>
+					)
 		);
 	}
 }

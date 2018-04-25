@@ -133,7 +133,7 @@ class Login extends Component {
 					<Row>
 						<div className="col-md-4 col-sm-12 offset-sm-4">
 							<Card>
-								<CardHeader>Přihlášení do systému FlixBUS</CardHeader>
+								<CardHeader className="flixbus-bg">Přihlášení do systému FlixBUS</CardHeader>
 								<CardBody>
 								{this.state.error && <Alert color="danger">{this.state.error}</Alert>}
 									<Form onSubmit={this.handleSubmit}>

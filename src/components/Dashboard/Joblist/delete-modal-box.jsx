@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { FaTimesCircle as Delete} from 'react-icons/lib/fa';
+import { FaTrashO as Delete} from 'react-icons/lib/fa';
 import ReactTooltip from 'react-tooltip';
 
 // import ModalBox from 'modalbox';

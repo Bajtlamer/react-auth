@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Alert, Popover, PopoverBody } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input, Alert, Popover, PopoverBody, Container } from 'reactstrap';
 import ReactTooltip from 'react-tooltip';
 import { FaPlus } from 'react-icons/lib/fa';
 import { FaEdit } from 'react-icons/lib/fa';
@@ -166,17 +166,18 @@ class NewModalBox extends React.Component {
 
 
   render() {
-    const style = { cursor: 'hand', color: 'darkblue' };
+    const style = { cursor: 'hand', color: '#28a745' };
     return (
       <div>
         {this.props.mode === 1 ?
           (
             <FaEdit size={18} style={style} onClick={this.toggle} data-tip="Upravit záznam" data-for='edit' />
           ) : (
-            <Button className="float-right" color="danger" onClick={this.toggle}><FaPlus />&nbsp;Nová</Button>
+            <Button className="float-right" color="success" onClick={this.toggle}><FaPlus />&nbsp;Nová</Button>
           )}
 
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+        <Container>
           <ModalHeader toggle={this.toggle}>{this.props.mode === 1 ? 'Editace trasy' : 'Nová trasa'}</ModalHeader>
           <ModalBody>
             {this.state.error && <Alert color="danger">{this.state.error}</Alert>}
@@ -220,6 +221,7 @@ class NewModalBox extends React.Component {
             <Button size="sm" color="primary" onClick={() => this.handleSubmit(this)}>Uložit</Button>{' '}
             <Button size="sm" color="secondary" onClick={this.toggle}>Zavřít</Button>
           </ModalFooter>
+          </Container>
         </Modal>
         <ReactTooltip place="left" id='edit' effect='solid' delayShow={1000} />
       </div>
