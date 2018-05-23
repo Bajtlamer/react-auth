@@ -7,7 +7,7 @@ import EditModalBox from './NewModalBox';
 
 const DeleteButton = (cell, row, rowIndex, formatExtraData) => {
     return (
-        (typeof row !== 'undefined') && 
+        (typeof row !== 'undefined') &&
         <DeleteModalBox onDelete={() => formatExtraData.onDelete(row.key)} trasa={row.trasa} />
     );
 }
@@ -122,7 +122,7 @@ export default class Table extends React.Component {
                     keyField='key'
                     data={this.state.trips}
                     columns={columns}
-                    pagination={paginationFactory(options)} 
+                    pagination={paginationFactory(options)}
                     />
             ) : (
                     ''
